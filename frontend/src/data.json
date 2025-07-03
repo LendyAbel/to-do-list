@@ -1,5 +1,4 @@
-{
-  "to-do-list": [
+[
     {
       "title": "Revisar correo electrónico",
       "description": "Leer y responder los correos pendientes del trabajo.",
@@ -61,4 +60,3 @@
       "id": 10
     }
   ]
-}
