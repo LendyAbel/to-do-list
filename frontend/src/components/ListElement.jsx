@@ -27,6 +27,7 @@ const ListElement = ({ element, checked, handleCheck }) => {
         onClick={(e) => {
           e.stopPropagation()
           handleCheck(element.id)
+          setExpand(false)
         }}
         checked={checked}
         readOnly
@@ -45,10 +46,7 @@ const ListElement = ({ element, checked, handleCheck }) => {
                 exit={{ height: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <div ref={ref}>
-                  <p>{description}</p>
-                  <p className="text-right">{date}</p>
-                </div>
+                <p ref={ref}>{description}</p>
               </motion.div>
             )}
           </AnimatePresence>

@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import ListElement from './ListElement'
-
 import { motion, AnimatePresence } from 'framer-motion'
-
 import list from '../data.json'
 
 const ToDoList = () => {
