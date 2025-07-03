@@ -19,7 +19,7 @@ const ListElement = ({ element, checked, handleCheck }) => {
   return (
     <div
       onClick={handleExpand}
-      className="grid cursor-pointer grid-cols-[auto_1fr] items-center gap-5 rounded-lg bg-white p-5 shadow-md"
+      className="grid w-full cursor-pointer grid-cols-[auto_1fr] items-center gap-5 rounded-lg bg-white p-5 shadow-md"
     >
       <input
         className="scale-200"
@@ -32,9 +32,9 @@ const ListElement = ({ element, checked, handleCheck }) => {
         checked={checked}
         readOnly
       />
-      <div className="flex w-full flex-col gap-2">
-        <div>
-          <h3 className={`text-2xl font-bold ${checked ? 'line-through' : ''}`}>
+      <div className="flex flex-col gap-2">
+        <div className="w-full">
+          <h3 className={`font-bold ${checked ? 'line-through' : ''}`}>
             {title}
           </h3>
           <AnimatePresence initial={false}>

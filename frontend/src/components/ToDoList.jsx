@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import ListElement from './ListElement'
+import AddElement from './AddElement'
 import { motion, AnimatePresence } from 'framer-motion'
 import list from '../data.json'
 
@@ -20,6 +21,7 @@ const ToDoList = () => {
 
   return (
     <div className="mx-auto flex w-5/6 flex-col gap-3 rounded-lg bg-yellow-200 p-3 shadow-lg">
+      <AddElement />
       <AnimatePresence>
         {sortedList.map((element) => {
           return (
