@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const ListElement = ({ element }) => {
+const ListElement = ({ element, checked, handleCheck }) => {
   const [expand, setExpand] = useState(false)
   const [height, setHeight] = useState(0)
   const ref = useRef(null)
@@ -10,8 +10,6 @@ const ListElement = ({ element }) => {
 
   useEffect(() => {
     if (expand && ref.current) {
-      console.log(ref.current.scrollHeight);
-      
       setHeight(ref.current.scrollHeight)
     }
   }, [expand, description])
@@ -26,11 +24,18 @@ const ListElement = ({ element }) => {
       <input
         className="scale-200"
         type="checkbox"
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.stopPropagation()
+          handleCheck(element.id)
+        }}
+        checked={checked}
+        readOnly
       />
       <div className="flex w-full flex-col gap-2">
         <div>
-          <h3 className="text-2xl font-bold">{title}</h3>
+          <h3 className={`text-2xl font-bold ${checked ? 'line-through' : ''}`}>
+            {title}
+          </h3>
           <AnimatePresence initial={false}>
             {expand && (
               <motion.div
