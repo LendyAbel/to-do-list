@@ -1,11 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ListElement from './ListElement'
 import AddElement from './AddElement'
 import { motion, AnimatePresence } from 'framer-motion'
-import list from '../data.json'
+import dataList from '../data.json'
 
 const ToDoList = () => {
+  const [list, setList] = useState([])
   const [checked, setChecked] = useState({})
+
+  useEffect(() => {
+    setList(dataList)
+  }, [])
 
   const handleCheck = (id) => {
     setChecked((prev) => ({

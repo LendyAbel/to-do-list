@@ -1,12 +1,12 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-
+import DeleteButton from './DeleteButton'
 const ListElement = ({ element, checked, handleCheck }) => {
   const [expand, setExpand] = useState(false)
   const [height, setHeight] = useState(0)
   const ref = useRef(null)
 
-  const { title, description, date } = element
+  const { title, description } = element
 
   useEffect(() => {
     if (expand && ref.current) {
@@ -46,7 +46,10 @@ const ListElement = ({ element, checked, handleCheck }) => {
                 exit={{ height: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <p ref={ref}>{description}</p>
+                <div ref={ref} className="flex flex-col">
+                  <p>{description}</p>
+                  <DeleteButton/>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
