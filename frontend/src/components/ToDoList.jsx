@@ -19,6 +19,23 @@ const ToDoList = () => {
     }))
   }
 
+  const addElement = (element) => {
+    setList((prev) => [...prev, element])
+  }
+
+  const handleAddForm = (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const newElement = {
+      id: list.length + 1,
+      title: formData.get('title'),
+      description: formData.get('description'),
+      date: formData.get('date'),
+    }
+    console.log('Adding new element:', newElement)
+    addElement(newElement)
+  }
+
   const sortedList = [
     ...list.filter((el) => !checked[el.id]),
     ...list.filter((el) => checked[el.id]),
