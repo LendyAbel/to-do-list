@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import DeleteButton from './DeleteButton'
-const ListElement = ({ element, checked, handleCheck }) => {
+const Element = ({ element, checked, handleCheck }) => {
   const [expand, setExpand] = useState(false)
   const [height, setHeight] = useState(0)
   const ref = useRef(null)
@@ -37,8 +37,8 @@ const ListElement = ({ element, checked, handleCheck }) => {
           <h3 className={`font-bold ${checked ? 'line-through' : ''}`}>
             {title}
           </h3>
-          <AnimatePresence initial={false}>
-            {expand && (
+          <AnimatePresence>
+          {expand && (
               <motion.div
                 className="overflow-hidden"
                 initial={{ height: 0 }}
@@ -48,10 +48,10 @@ const ListElement = ({ element, checked, handleCheck }) => {
               >
                 <div ref={ref} className="flex flex-col">
                   <p>{description}</p>
-                  <DeleteButton/>
+                  <DeleteButton />
                 </div>
               </motion.div>
-            )}
+          )}
           </AnimatePresence>
         </div>
       </div>
@@ -59,4 +59,4 @@ const ListElement = ({ element, checked, handleCheck }) => {
   )
 }
 
-export default ListElement
+export default Element

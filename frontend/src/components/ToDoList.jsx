@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
-import ListElement from './ListElement'
-import AddElement from './AddElement'
+import Element from './Element'
+import AddButton from './AddButton'
+import AddForm from './AddForm'
 import { motion, AnimatePresence } from 'framer-motion'
 import dataList from '../data.json'
 
 const ToDoList = () => {
   const [list, setList] = useState([])
   const [checked, setChecked] = useState({})
+  const [formOpen, setFormOpen] = useState(false)
 
   useEffect(() => {
     setList(dataList)
@@ -21,6 +23,13 @@ const ToDoList = () => {
 
   const addElement = (element) => {
     setList((prev) => [...prev, element])
+  }
+
+  const openForm = () => {
+    setFormOpen(true)
+  }
+  const closeForm = () => {
+    setFormOpen(false)
   }
 
   const handleAddForm = (e) => {
@@ -43,28 +52,34 @@ const ToDoList = () => {
 
   return (
     <div className="mx-auto flex w-5/6 flex-col gap-3 rounded-lg bg-yellow-200 p-3 shadow-lg">
-      <AddElement />
-      <AnimatePresence>
-        {sortedList.map((element) => {
-          return (
-            <motion.div
-              key={element.id}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ type: 'spring', stiffness: 200, damping: 20 }}
-            >
-              <ListElement
-                key={element.id}
-                element={element}
-                checked={!!checked[element.id]}
-                handleCheck={handleCheck}
-              />
-            </motion.div>
-          )
-        })}
-      </AnimatePresence>
+      {/* {formOpen ? ( */}
+        <AddForm handleClose={closeForm}/>
+      {/* ) : (
+        <>
+          <AddButton openForm={openForm} />
+          <AnimatePresence>
+            {sortedList.map((element) => {
+              return (
+                <motion.div
+                  key={element.id}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+                >
+                  <Element
+                    key={element.id}
+                    element={element}
+                    checked={!!checked[element.id]}
+                    handleCheck={handleCheck}
+                  />
+                </motion.div>
+              )
+            })}
+          </AnimatePresence>
+        </>
+      )} */}
     </div>
   )
 }
