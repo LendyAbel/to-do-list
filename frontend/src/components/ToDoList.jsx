@@ -22,7 +22,7 @@ const ToDoList = () => {
   }
 
   const addElement = (element) => {
-    setList((prev) => [...prev, element])
+    setList((prev) => [element, ...prev])
   }
 
   const openForm = () => {
@@ -32,15 +32,16 @@ const ToDoList = () => {
     setFormOpen(false)
   }
 
-  const handleAddForm = (e) => {
-    e.preventDefault()
-    const formData = new FormData(e.target)
+  const handleAddForm = (element) => {
+    console.log('element to add:', element)
+    const { title, description, date } = element
     const newElement = {
       id: list.length + 1,
-      title: formData.get('title'),
-      description: formData.get('description'),
-      date: formData.get('date'),
+      title,
+      description,
+      date,
     }
+
     console.log('Adding new element:', newElement)
     addElement(newElement)
   }
@@ -52,9 +53,9 @@ const ToDoList = () => {
 
   return (
     <div className="mx-auto flex w-5/6 flex-col gap-3 rounded-lg bg-yellow-200 p-3 shadow-lg">
-      {/* {formOpen ? ( */}
-        <AddForm handleClose={closeForm}/>
-      {/* ) : (
+      {formOpen ? (
+        <AddForm handleClose={closeForm} handleAdd={handleAddForm} />
+      ) : (
         <>
           <AddButton openForm={openForm} />
           <AnimatePresence>
@@ -79,7 +80,7 @@ const ToDoList = () => {
             })}
           </AnimatePresence>
         </>
-      )} */}
+      )}
     </div>
   )
 }

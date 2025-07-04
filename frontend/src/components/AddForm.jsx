@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useState } from 'react'
 
-const AddForm = ({ handleClose }) => {
+const AddForm = ({ handleClose, handleAdd }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -10,12 +10,19 @@ const AddForm = ({ handleClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setDate()
     console.log('Form submitted:', formData)
-
+    handleAdd(formData)
     handleClose()
   }
 
-  const handleCancel = ()=>{
+  const setDate = () => {
+    const today = new Date()
+    const formattedDate = today.toISOString().split('T')[0] // YYYY-MM-DD format
+    setFormData((prev) => ({ ...prev, date: formattedDate }))
+  }
+
+  const handleCancel = () => {
     setFormData({
       title: '',
       description: '',
@@ -27,7 +34,10 @@ const AddForm = ({ handleClose }) => {
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-3 bg-yellow-200">
-      <motion.form className="flex w-full flex-col items-center justify-center gap-3" onSubmit={handleSubmit}>
+      <motion.form
+        className="flex w-full flex-col items-center justify-center gap-3"
+        onSubmit={handleSubmit}
+      >
         <div>
           <label className="block text-lg font-semibold">
             Title:
@@ -35,7 +45,9 @@ const AddForm = ({ handleClose }) => {
               type="text"
               name="title"
               value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
               className="w-full rounded-lg border p-1 shadow-md"
               required
             />
@@ -45,14 +57,16 @@ const AddForm = ({ handleClose }) => {
             <textarea
               name="description"
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full rounded-lg border p-1 shadow-md resize-none"
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
+              className="w-full resize-none rounded-lg border p-1 shadow-md"
               required
             />
           </label>
         </div>
         <button
-          type='submit'
+          type="submit"
           className="w-2/5 cursor-pointer rounded-lg bg-green-400 p-1 shadow-md hover:bg-green-500"
         >
           Add
