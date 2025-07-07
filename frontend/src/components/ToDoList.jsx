@@ -8,6 +8,7 @@ import dataList from '../data.json'
 
 const ToDoList = () => {
   const [list, setList] = useState([])
+  const [listToShow, setListToShow] = useState([])
   const [checked, setChecked] = useState({})
   const [formOpen, setFormOpen] = useState(false)
 
@@ -15,11 +16,15 @@ const ToDoList = () => {
     setList(dataList)
   }, [])
 
-  const handleCheck = (id) => {
-    setChecked((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }))
+  useEffect(() => {
+    setListToShow(list)
+  }, [list])
+
+  const openForm = () => {
+    setFormOpen(true)
+  }
+  const closeForm = () => {
+    setFormOpen(false)
   }
 
   const addElement = (element) => {
@@ -31,13 +36,6 @@ const ToDoList = () => {
     console.log('Element deleted:', id)
   }
 
-  const openForm = () => {
-    setFormOpen(true)
-  }
-  const closeForm = () => {
-    setFormOpen(false)
-  }
-
   const handleAddForm = (element) => {
     const { title, description } = element
     const newElement = {
@@ -45,15 +43,26 @@ const ToDoList = () => {
       title,
       description,
     }
-
     console.log('Adding new element:', newElement)
     addElement(newElement)
   }
 
-  const sortedList = [
-    ...list.filter((el) => !checked[el.id]),
-    ...list.filter((el) => checked[el.id]),
-  ]
+  const handleCheck = (id) => {
+    setChecked((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }))
+  }
+
+  const showToDo = () => {
+    setListToShow(list.filter((el) => !checked[el.id]))
+  }
+  const showDone = () => {
+    setListToShow(list.filter((el) => checked[el.id]))
+  }
+  const showAll = () => {
+    setListToShow(list)
+  }
 
   return (
     <div className="mx-auto flex w-[96%] flex-col gap-3 rounded-lg bg-yellow-200 p-3 shadow-lg">
@@ -62,9 +71,9 @@ const ToDoList = () => {
       ) : (
         <>
           <AddButton openForm={openForm} />
-          <Filter />
+          <Filter showToDo={showToDo} showDone={showDone} showAll={showAll} />
           <AnimatePresence>
-            {sortedList.map((element) => {
+            {listToShow.map((element) => {
               return (
                 <motion.div
                   key={element.id}
