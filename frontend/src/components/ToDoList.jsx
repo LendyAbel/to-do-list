@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Element from './Element'
 import AddButton from './AddButton'
 import AddForm from './AddForm'
+import Filter from './Filter'
 import { motion, AnimatePresence } from 'framer-motion'
 import dataList from '../data.json'
 
@@ -61,6 +62,7 @@ const ToDoList = () => {
       ) : (
         <>
           <AddButton openForm={openForm} />
+          <Filter />
           <AnimatePresence>
             {sortedList.map((element) => {
               return (
