@@ -10,6 +10,8 @@ const ToDoList = () => {
   const [checked, setChecked] = useState({})
   const [formOpen, setFormOpen] = useState(false)
 
+  console.log('List:', list)
+
   useEffect(() => {
     setList(dataList)
   }, [])
@@ -24,6 +26,10 @@ const ToDoList = () => {
   const addElement = (element) => {
     setList((prev) => [element, ...prev])
   }
+  
+  const deleteElement = (id) => {
+    setList((prev) => prev.filter((el) => el.id !== id))
+  }
 
   const openForm = () => {
     setFormOpen(true)
@@ -32,19 +38,20 @@ const ToDoList = () => {
     setFormOpen(false)
   }
 
+ 
   const handleAddForm = (element) => {
     console.log('element to add:', element)
-    const { title, description, date } = element
+    const { title, description } = element
     const newElement = {
-      id: list.length + 1,
+      id: new Date().getTime(),
       title,
       description,
-      date,
     }
 
     console.log('Adding new element:', newElement)
     addElement(newElement)
   }
+
 
   const sortedList = [
     ...list.filter((el) => !checked[el.id]),
@@ -74,6 +81,7 @@ const ToDoList = () => {
                     element={element}
                     checked={!!checked[element.id]}
                     handleCheck={handleCheck}
+                    deleteElement={deleteElement}
                   />
                 </motion.div>
               )

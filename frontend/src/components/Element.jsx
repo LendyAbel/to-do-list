@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import DeleteButton from './DeleteButton'
-const Element = ({ element, checked, handleCheck }) => {
+
+const Element = ({ element, checked, handleCheck, deleteElement }) => {
   const [expand, setExpand] = useState(false)
   const [height, setHeight] = useState(0)
   const ref = useRef(null)
@@ -48,7 +49,7 @@ const Element = ({ element, checked, handleCheck }) => {
               >
                 <div ref={ref} className="flex flex-col">
                   <p>{description}</p>
-                  <DeleteButton />
+                  <DeleteButton deleteElement={deleteElement} id={element.id} />
                 </div>
               </motion.div>
           )}

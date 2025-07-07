@@ -1,10 +1,10 @@
 import deleteIcon from '../assets/icons/icons8-basura-llena-48.svg'
 
-const DeleteButton = ({deleteElement}) => {
+const DeleteButton = ({deleteElement, id}) => {
 
-handleClick = (e) => {
+const handleClick = (e) => {
   e.stopPropagation()
-  deleteElement()
+  deleteElement(id)
 }
 
   return (

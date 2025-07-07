@@ -26,7 +26,6 @@ const AddForm = ({ handleClose, handleAdd }) => {
     setFormData({
       title: '',
       description: '',
-      date: '',
     })
     console.log('Form closed')
     handleClose()

@@ -2,61 +2,51 @@
     {
       "title": "Revisar correo electrónico",
       "description": "Leer y responder los correos pendientes del trabajo.",
-      "date": "2025-07-01",
-      "id": 1
+      "id": 1720341000001
     },
     {
       "title": "Preparar presentación semanal",
       "description": "Crear las diapositivas para la reunión del equipo.",
-      "date": "2025-07-02",
-      "id": 2
+      "id": 1720341000002
     },
     {
       "title": "Actualizar repositorio de código",
       "description": "Subir los últimos cambios al repositorio de GitHub.",
-      "date": "2025-07-02",
-      "id": 3
+      "id": 1720341000003
     },
     {
       "title": "Hacer compra del supermercado",
       "description": "Comprar alimentos y productos básicos para la semana.",
-      "date": "2025-07-03",
-      "id": 4
+      "id": 1720341000004
     },
     {
       "title": "Estudiar patrones de diseño",
       "description": "Leer el capítulo sobre patrones de diseño en el libro de programación.",
-      "date": "2025-07-03",
-      "id": 5
+      "id": 1720341000005
     },
     {
       "title": "Llamar al proveedor de internet",
       "description": "Solicitar información sobre la mejora del plan de internet.",
-      "date": "2025-07-04",
-      "id": 6
+      "id": 1720341000006
     },
     {
       "title": "Ejercicio físico",
       "description": "Salir a correr 30 minutos en el parque.",
-      "date": "2025-07-04",
-      "id": 7
+      "id": 1720341000007
     },
     {
       "title": "Limpiar escritorio",
       "description": "Organizar papeles y limpiar el área de trabajo.",
-      "date": "2025-07-05",
-      "id": 8
+      "id": 1720341000008
     },
     {
       "title": "Revisar tareas del curso de React JS",
       "description": "Completar los ejercicios pendientes del módulo 3.",
-      "date": "2025-07-05",
-      "id": 9
+      "id": 1720341000009
     },
     {
       "title": "Planificar menú semanal",
       "description": "Definir las comidas de la semana y hacer la lista de ingredientes.",
-      "date": "2025-07-06",
-      "id": 10
+      "id": 1720341000010
     }
   ]
