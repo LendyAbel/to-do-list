@@ -10,8 +10,11 @@ const Element = ({ element, checked, handleCheck, deleteElement }) => {
   const { title, description } = element
 
   useEffect(() => {
-    if (expand && ref.current) {
-      setHeight(ref.current.scrollHeight)
+    if (ref.current) {
+      const frame = requestAnimationFrame(() => {
+        setHeight(ref.current.scrollHeight)
+      })
+      return () => cancelAnimationFrame(frame)
     }
   }, [expand, description])
 
@@ -39,20 +42,19 @@ const Element = ({ element, checked, handleCheck, deleteElement }) => {
             {title}
           </h3>
           <AnimatePresence>
-          {expand && (
+            {expand && (
               <motion.div
-                className="overflow-hidden"
+                className="flex flex-col overflow-hidden"
                 initial={{ height: 0 }}
                 animate={{ height }}
                 exit={{ height: 0 }}
                 transition={{ duration: 0.2 }}
+                ref={ref}
               >
-                <div ref={ref} className="flex flex-col">
-                  <p>{description}</p>
-                  <DeleteButton deleteElement={deleteElement} id={element.id} />
-                </div>
+                <p>{description}</p>
+                <DeleteButton deleteElement={deleteElement} id={element.id} />
               </motion.div>
-          )}
+            )}
           </AnimatePresence>
         </div>
       </div>

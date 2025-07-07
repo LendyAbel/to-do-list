@@ -5,21 +5,12 @@ const AddForm = ({ handleClose, handleAdd }) => {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    date: '',
   })
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    setDate()
-    console.log('Form submitted:', formData)
     handleAdd(formData)
     handleClose()
-  }
-
-  const setDate = () => {
-    const today = new Date()
-    const formattedDate = today.toISOString().split('T')[0] // YYYY-MM-DD format
-    setFormData((prev) => ({ ...prev, date: formattedDate }))
   }
 
   const handleCancel = () => {
@@ -47,7 +38,7 @@ const AddForm = ({ handleClose, handleAdd }) => {
               onChange={(e) =>
                 setFormData({ ...formData, title: e.target.value })
               }
-              className="w-full rounded-lg border p-1 shadow-md"
+              className="w-full rounded-lg border bg-yellow-50 p-1 shadow-md"
               required
             />
           </label>
@@ -59,7 +50,7 @@ const AddForm = ({ handleClose, handleAdd }) => {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="w-full resize-none rounded-lg border p-1 shadow-md"
+              className="w-full resize-none rounded-lg border bg-yellow-50 p-1 shadow-md"
               required
             />
           </label>
@@ -71,6 +62,7 @@ const AddForm = ({ handleClose, handleAdd }) => {
           Add
         </button>
         <button
+          type="button"
           onClick={handleCancel}
           className="w-2/5 cursor-pointer rounded-lg bg-red-400 p-1 shadow-md hover:bg-red-500"
         >

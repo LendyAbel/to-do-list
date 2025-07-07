@@ -10,8 +10,6 @@ const ToDoList = () => {
   const [checked, setChecked] = useState({})
   const [formOpen, setFormOpen] = useState(false)
 
-  console.log('List:', list)
-
   useEffect(() => {
     setList(dataList)
   }, [])
@@ -26,9 +24,10 @@ const ToDoList = () => {
   const addElement = (element) => {
     setList((prev) => [element, ...prev])
   }
-  
+
   const deleteElement = (id) => {
     setList((prev) => prev.filter((el) => el.id !== id))
+    console.log('Element deleted:', id)
   }
 
   const openForm = () => {
@@ -38,9 +37,7 @@ const ToDoList = () => {
     setFormOpen(false)
   }
 
- 
   const handleAddForm = (element) => {
-    console.log('element to add:', element)
     const { title, description } = element
     const newElement = {
       id: new Date().getTime(),
@@ -52,14 +49,13 @@ const ToDoList = () => {
     addElement(newElement)
   }
 
-
   const sortedList = [
     ...list.filter((el) => !checked[el.id]),
     ...list.filter((el) => checked[el.id]),
   ]
 
   return (
-    <div className="mx-auto flex w-5/6 flex-col gap-3 rounded-lg bg-yellow-200 p-3 shadow-lg">
+    <div className="mx-auto flex w-[96%] flex-col gap-3 rounded-lg bg-yellow-200 p-3 shadow-lg">
       {formOpen ? (
         <AddForm handleClose={closeForm} handleAdd={handleAddForm} />
       ) : (
