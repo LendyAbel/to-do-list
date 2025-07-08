@@ -18,7 +18,6 @@ const AddForm = ({ handleClose, handleAdd }) => {
       title: '',
       description: '',
     })
-    console.log('Form closed')
     handleClose()
   }
 
