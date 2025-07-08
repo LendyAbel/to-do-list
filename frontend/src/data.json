@@ -1,52 +1,62 @@
 [
-    {
-      "title": "Revisar correo electrónico",
-      "description": "Leer y responder los correos pendientes del trabajo.",
-      "id": 1720341000001
-    },
-    {
-      "title": "Preparar presentación semanal",
-      "description": "Crear las diapositivas para la reunión del equipo.",
-      "id": 1720341000002
-    },
-    {
-      "title": "Actualizar repositorio de código",
-      "description": "Subir los últimos cambios al repositorio de GitHub.",
-      "id": 1720341000003
-    },
-    {
-      "title": "Hacer compra del supermercado",
-      "description": "Comprar alimentos y productos básicos para la semana.",
-      "id": 1720341000004
-    },
-    {
-      "title": "Estudiar patrones de diseño",
-      "description": "Leer el capítulo sobre patrones de diseño en el libro de programación.",
-      "id": 1720341000005
-    },
-    {
-      "title": "Llamar al proveedor de internet",
-      "description": "Solicitar información sobre la mejora del plan de internet.",
-      "id": 1720341000006
-    },
-    {
-      "title": "Ejercicio físico",
-      "description": "Salir a correr 30 minutos en el parque.",
-      "id": 1720341000007
-    },
-    {
-      "title": "Limpiar escritorio",
-      "description": "Organizar papeles y limpiar el área de trabajo.",
-      "id": 1720341000008
-    },
-    {
-      "title": "Revisar tareas del curso de React JS",
-      "description": "Completar los ejercicios pendientes del módulo 3.",
-      "id": 1720341000009
-    },
-    {
-      "title": "Planificar menú semanal",
-      "description": "Definir las comidas de la semana y hacer la lista de ingredientes.",
-      "id": 1720341000010
-    }
-  ]
+  {
+    "title": "Revisar correo electrónico",
+    "description": "Leer y responder los correos pendientes del trabajo.",
+    "id": 1720341000001,
+    "checked": false
+  },
+  {
+    "title": "Preparar presentación semanal",
+    "description": "Crear las diapositivas para la reunión del equipo.",
+    "id": 1720341000002,
+    "checked": false
+  },
+  {
+    "title": "Actualizar repositorio de código",
+    "description": "Subir los últimos cambios al repositorio de GitHub.",
+    "id": 1720341000003,
+    "checked": true
+  },
+  {
+    "title": "Hacer compra del supermercado",
+    "description": "Comprar alimentos y productos básicos para la semana.",
+    "id": 1720341000004,
+    "checked": false
+  },
+  {
+    "title": "Estudiar patrones de diseño",
+    "description": "Leer el capítulo sobre patrones de diseño en el libro de programación.",
+    "id": 1720341000005,
+    "checked": false
+  },
+  {
+    "title": "Llamar al proveedor de internet",
+    "description": "Solicitar información sobre la mejora del plan de internet.",
+    "id": 1720341000006,
+    "checked": true
+  },
+  {
+    "title": "Ejercicio físico",
+    "description": "Salir a correr 30 minutos en el parque.",
+    "id": 1720341000007,
+    "checked": false
+  },
+  {
+    "title": "Limpiar escritorio",
+    "description": "Organizar papeles y limpiar el área de trabajo.",
+    "id": 1720341000008,
+    "checked": false
+  },
+  {
+    "title": "Revisar tareas del curso de React JS",
+    "description": "Completar los ejercicios pendientes del módulo 3.",
+    "id": 1720341000009,
+    "checked": true
+  },
+  {
+    "title": "Planificar menú semanal",
+    "description": "Definir las comidas de la semana y hacer la lista de ingredientes.",
+    "id": 1720341000010,
+    "checked": false
+  }
+]

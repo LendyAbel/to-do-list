@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Filter = ({showToDo, showDone, showAll}) => {
+const Filter = ({ showToDo, showDone, showAll }) => {
   const [activeFilter, setActiveFilter] = useState([false, false, true])
 
   const todoHandler = () => {
@@ -17,8 +17,6 @@ const Filter = ({showToDo, showDone, showAll}) => {
     setActiveFilter([false, false, true])
     showAll()
   }
-
-
 
   return (
     <div className="grid grid-cols-3 gap-5">

@@ -5,20 +5,29 @@ import AddForm from './AddForm'
 import Filter from './Filter'
 import { motion, AnimatePresence } from 'framer-motion'
 import dataList from '../data.json'
+import { check } from 'prettier'
 
 const ToDoList = () => {
   const [list, setList] = useState([])
   const [listToShow, setListToShow] = useState([])
-  const [checked, setChecked] = useState({})
   const [formOpen, setFormOpen] = useState(false)
+  const [activeFilter, setActiveFilter] = useState('all')
 
   useEffect(() => {
     setList(dataList)
   }, [])
 
   useEffect(() => {
-    setListToShow(list)
-  }, [list])
+    if (activeFilter === 'all') {
+      setListToShow(list)
+    }
+    if (activeFilter === 'todo') {
+      setListToShow(list.filter((el) => !el.checked))
+    }
+    if (activeFilter === 'done') {
+      setListToShow(list.filter((el) => el.checked))
+    }
+  }, [list, activeFilter])
 
   const openForm = () => {
     setFormOpen(true)
@@ -47,22 +56,19 @@ const ToDoList = () => {
     addElement(newElement)
   }
 
-  const handleCheck = (id) => {
-    setChecked((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }))
+  const handleCheck = (element) => {
+    const newElement = { ...element, checked: !element.checked }
+    const updatedList = list.map((el) => {
+      return el.id === element.id ? newElement : el
+    })
+    setList(updatedList)
   }
 
-  const showToDo = () => {
-    setListToShow(list.filter((el) => !checked[el.id]))
-  }
-  const showDone = () => {
-    setListToShow(list.filter((el) => checked[el.id]))
-  }
-  const showAll = () => {
-    setListToShow(list)
-  }
+  const showToDo = () => setActiveFilter('todo')
+
+  const showDone = () => setActiveFilter('done')
+
+  const showAll = () => setActiveFilter('all')
 
   return (
     <div className="mx-auto flex min-h-screen w-[96%] flex-col gap-3 rounded-lg bg-yellow-200 p-3 shadow-lg">
@@ -72,7 +78,7 @@ const ToDoList = () => {
         <>
           <AddButton openForm={openForm} />
           <Filter showToDo={showToDo} showDone={showDone} showAll={showAll} />
-          <AnimatePresence >
+          <AnimatePresence>
             {listToShow.map((element) => {
               return (
                 <motion.div
@@ -86,7 +92,6 @@ const ToDoList = () => {
                   <Element
                     key={element.id}
                     element={element}
-                    checked={!!checked[element.id]}
                     handleCheck={handleCheck}
                     deleteElement={deleteElement}
                   />

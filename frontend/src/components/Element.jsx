@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import DeleteButton from './DeleteButton'
 
-const Element = ({ element, checked, handleCheck, deleteElement }) => {
+const Element = ({ element, handleCheck, deleteElement }) => {
   const [expand, setExpand] = useState(false)
   const [height, setHeight] = useState(0)
   const ref = useRef(null)
@@ -30,15 +30,15 @@ const Element = ({ element, checked, handleCheck, deleteElement }) => {
         type="checkbox"
         onClick={(e) => {
           e.stopPropagation()
-          handleCheck(element.id)
+          handleCheck(element)
           setExpand(false)
         }}
-        checked={checked}
+        checked={element.checked}
         readOnly
       />
       <div className="flex flex-col gap-2">
         <div className="w-full">
-          <h3 className={`font-bold ${checked ? 'line-through' : ''}`}>
+          <h3 className={`font-bold ${element.checked ? 'line-through' : ''}`}>
             {title}
           </h3>
           <AnimatePresence>
