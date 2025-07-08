@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react'
-import Element from './Element'
-import AddButton from './AddButton'
-import AddForm from './AddForm'
-import Filter from './Filter'
+import { Element, AddButton, AddForm, Filter } from '../components'
 import { motion, AnimatePresence } from 'framer-motion'
 import dataList from '../data.json'
 

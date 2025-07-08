@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import DeleteButton from './DeleteButton'
+import { DeleteButton } from '../components'
 
 const Element = ({ element, handleCheck, deleteElement }) => {
   const [expand, setExpand] = useState(false)
