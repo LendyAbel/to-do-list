@@ -76,7 +76,7 @@ const ToDoList = () => {
   const showAll = () => setActiveFilter('all')
 
   return (
-    <div className="bg-primary-bg mx-auto w-[96%] max-w-3xl rounded-lg shadow-lg  p-3">
+    <div className="bg-primary-bg mx-auto max-h-[80vh] w-[96%] max-w-3xl rounded-lg p-3 shadow-lg">
       <AnimatePresence mode="wait">
         {formOpen ? (
           <motion.div
@@ -95,18 +95,20 @@ const ToDoList = () => {
             <AddButton openForm={openForm} />
             <Filter showToDo={showToDo} showDone={showDone} showAll={showAll} />
             <AnimatePresence>
-              {listToShow.map((element) => {
-                return (
-                  <motion.div key={element.id} layout {...itemVariants}>
-                    <Element
-                      key={element.id}
-                      element={element}
-                      handleCheck={handleCheck}
-                      deleteElement={deleteElement}
-                    />
-                  </motion.div>
-                )
-              })}
+              <div className="bg-primary-bg flex max-h-[56vh] flex-col gap-2 overflow-y-auto rounded-lg p-3">
+                {listToShow.map((element) => {
+                  return (
+                    <motion.div key={element.id} layout {...itemVariants}>
+                      <Element
+                        key={element.id}
+                        element={element}
+                        handleCheck={handleCheck}
+                        deleteElement={deleteElement}
+                      />
+                    </motion.div>
+                  )
+                })}
+              </div>
             </AnimatePresence>
           </motion.div>
         )}

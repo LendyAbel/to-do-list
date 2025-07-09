@@ -4,7 +4,7 @@ import data from './data.json'
 
 function App() {
   return (
-    <div>
+    <div className='relative'>
       <Heroe />
       <ToDoList />
     </div>
