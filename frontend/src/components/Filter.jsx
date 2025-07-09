@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FilterButton } from '../components'
 
 const Filter = ({ showToDo, showDone, showAll }) => {
   const [activeFilter, setActiveFilter] = useState([false, false, true])
@@ -20,36 +21,21 @@ const Filter = ({ showToDo, showDone, showAll }) => {
 
   return (
     <div className="grid grid-cols-3 gap-5">
-      <button
-        className={`cursor-pointer rounded-md p-3 ${
-          activeFilter[0]
-            ? 'border-yellow-500 bg-yellow-300'
-            : 'bg-yellow-100 hover:bg-yellow-400'
-        }`}
-        onClick={todoHandler}
-      >
-        To Do
-      </button>
-      <button
-        className={`cursor-pointer rounded-md p-3 ${
-          activeFilter[1]
-            ? 'bg-yellow-300'
-            : 'bg-yellow-100 hover:bg-yellow-400'
-        }`}
-        onClick={doneHandler}
-      >
-        Done
-      </button>
-      <button
-        className={`cursor-pointer rounded-md p-3 ${
-          activeFilter[2]
-            ? 'bg-yellow-300'
-            : 'bg-yellow-100 hover:bg-yellow-400'
-        }`}
-        onClick={allHandler}
-      >
-        All
-      </button>
+      <FilterButton
+        label={'To Do'}
+        func={todoHandler}
+        isActive={activeFilter[0]}
+      />
+      <FilterButton
+        label={'Done'}
+        func={doneHandler}
+        isActive={activeFilter[1]}
+      />
+      <FilterButton
+        label={'All'}
+        func={allHandler}
+        isActive={activeFilter[2]}
+      />
     </div>
   )
 }

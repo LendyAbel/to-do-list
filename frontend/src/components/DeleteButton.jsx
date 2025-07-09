@@ -57,7 +57,7 @@ const DeleteButton = ({ deleteElement, id }) => {
               className="flex flex-col items-center gap-2 rounded-lg bg-red-300 px-6 py-4 opacity-100"
               onClick={(e) => e.stopPropagation()}
             >
-              <p className="text-sm">Are you sure?</p>
+              <p className="text-lg font-bold">Are you sure?</p>
               <div className="flex flex-row gap-2">
                 <button
                   className="cursor-pointer rounded-lg bg-red-400 px-3 py-1 hover:bg-red-500"

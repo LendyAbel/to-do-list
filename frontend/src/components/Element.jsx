@@ -23,10 +23,10 @@ const Element = ({ element, handleCheck, deleteElement }) => {
   return (
     <div
       onClick={handleExpand}
-      className="grid w-full cursor-pointer grid-cols-[auto_1fr] items-center gap-5 rounded-lg bg-white p-5 shadow-md"
+      className="grid w-full cursor-pointer grid-cols-[auto_1fr] items-center gap-5 rounded-lg bg-light-bg p-5 shadow-md"
     >
       <input
-        className="scale-200"
+        className="scale-200 accent-btn-primary"
         type="checkbox"
         onClick={(e) => {
           e.stopPropagation()
@@ -38,7 +38,9 @@ const Element = ({ element, handleCheck, deleteElement }) => {
       />
       <div className="flex flex-col gap-2">
         <div className="w-full">
-          <h3 className={`font-bold ${element.checked ? 'line-through' : ''}`}>
+          <h3
+            className={`font-bold ${element.checked ? 'text-text-inactive line-through' : 'text-text-secondary'}`}
+          >
             {title}
           </h3>
           <AnimatePresence>
@@ -51,7 +53,7 @@ const Element = ({ element, handleCheck, deleteElement }) => {
                 transition={{ duration: 0.2 }}
                 ref={ref}
               >
-                <p>{description}</p>
+                <p className="text-text-secondary">{description}</p>
                 <DeleteButton deleteElement={deleteElement} id={element.id} />
               </motion.div>
             )}

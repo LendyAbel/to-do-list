@@ -5,7 +5,7 @@ const AddButton = ({ openForm }) => {
     <div className="sticky top-2 z-10 self-center">
       <button
         type="button"
-        className="flex cursor-pointer items-center gap-2 rounded-lg bg-yellow-300 px-3 py-2 text-lg font-semibold shadow-md hover:bg-yellow-400"
+        className="bg-btn-primary hover:bg-btn-hover flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-lg font-semibold shadow-md"
         onClick={openForm}
       >
         <img src={addIcon} alt="add icon" />

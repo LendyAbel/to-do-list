@@ -76,13 +76,13 @@ const ToDoList = () => {
   const showAll = () => setActiveFilter('all')
 
   return (
-    <div className="mx-auto w-[96%] max-w-3xl">
+    <div className="bg-primary-bg mx-auto w-[96%] max-w-3xl rounded-lg shadow-lg  p-3">
       <AnimatePresence mode="wait">
         {formOpen ? (
           <motion.div
             key="form"
             {...screenVariants}
-            className="flex flex-col rounded-lg bg-yellow-200 p-3 shadow-lg"
+            className="flex flex-col p-3"
           >
             <AddForm handleClose={closeForm} handleAdd={handleAddForm} />
           </motion.div>
@@ -90,7 +90,7 @@ const ToDoList = () => {
           <motion.div
             key="list"
             {...screenVariants}
-            className="flex min-h-screen flex-col gap-3 rounded-lg bg-yellow-200 p-3 shadow-lg"
+            className="flex min-h-screen flex-col gap-3"
           >
             <AddButton openForm={openForm} />
             <Filter showToDo={showToDo} showDone={showDone} showAll={showAll} />
