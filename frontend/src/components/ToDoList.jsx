@@ -1,29 +1,30 @@
 import { useEffect, useState } from 'react'
-import { Element, AddButton, AddForm, Filter } from '../components'
+import { Element, AddForm, Filter, MainButton } from '../components'
 import { motion, AnimatePresence } from 'framer-motion'
 import dataList from '../data.json'
-
-// Animation for transitioning between screens ( form <-> list )
-const screenVariants = {
-  initial: { opacity: 0, scale: 0.8 },
-  animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.8 },
-  transition: { duration: 0.3 },
-}
-
-// Animation for each item in the list
-const itemVariants = {
-  initial: { opacity: 0, scale: 0.8 },
-  animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.8 },
-  transition: { duration: 0.3 },
-}
 
 const ToDoList = () => {
   const [list, setList] = useState([])
   const [listToShow, setListToShow] = useState([])
   const [formOpen, setFormOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState('all')
+  const [isDeleteActive, setIsDeleteActive] = useState('false')
+
+  // Animation for transitioning between screens ( form <-> list )
+  const screenVariants = {
+    initial: { opacity: 0, scale: 0.8 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.8 },
+    transition: { duration: 0.3 },
+  }
+
+  // Animation for each item in the list
+  const itemVariants = {
+    initial: { opacity: 0, scale: 0.8 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.8 },
+    transition: { duration: 0.3 },
+  }
 
   useEffect(() => {
     setList(dataList)
@@ -47,6 +48,8 @@ const ToDoList = () => {
   const closeForm = () => setFormOpen(false)
 
   const addElement = (element) => setList((prev) => [element, ...prev])
+
+  const activateDelete = () => setIsDeleteActive(!isDeleteActive)
 
   const deleteElement = (id) =>
     setList((prev) => prev.filter((el) => el.id !== id))
@@ -92,10 +95,13 @@ const ToDoList = () => {
             {...screenVariants}
             className="flex flex-col gap-3"
           >
-            <AddButton openForm={openForm} />
+            <div className="flex items-center justify-center gap-5">
+              <MainButton label="Add Element" icon="add" func={openForm} />
+              <MainButton label="Delete" cancel={isDeleteActive} icon="delete" func={activateDelete} />
+            </div>
             <Filter showToDo={showToDo} showDone={showDone} showAll={showAll} />
             <AnimatePresence>
-              <div className="bg-primary-bg flex max-h-[56vh] flex-col gap-2 overflow-y-auto rounded-lg p-3 ">
+              <div className="bg-primary-bg flex max-h-[56vh] flex-col gap-2 overflow-y-auto rounded-lg p-3">
                 {listToShow.map((element) => {
                   return (
                     <motion.div key={element.id} layout {...itemVariants}>
@@ -104,6 +110,7 @@ const ToDoList = () => {
                         element={element}
                         handleCheck={handleCheck}
                         deleteElement={deleteElement}
+                        isDeleteActive={isDeleteActive}
                       />
                     </motion.div>
                   )

@@ -2,12 +2,18 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DeleteButton } from '../components'
 
-const Element = ({ element, handleCheck, deleteElement }) => {
+const Element = ({ element, handleCheck, deleteElement, isDeleteActive }) => {
   const [expand, setExpand] = useState(false)
   const [height, setHeight] = useState(0)
   const ref = useRef(null)
-
   const { title, description } = element
+
+  const expandVariants = {
+    initial: { height: 0 },
+    animate: { height },
+    exit: { height: 0 },
+    transition: { duration: 0.2 },
+  }
 
   useEffect(() => {
     if (ref.current) {
@@ -20,46 +26,47 @@ const Element = ({ element, handleCheck, deleteElement }) => {
 
   const handleExpand = () => setExpand((prev) => !prev)
 
+  const handleDelete = () => deleteElement(element.id)
+
   return (
     <div
+      className="bg-light-bg cursor-pointer rounded-lg p-3 px-4 shadow-md"
       onClick={handleExpand}
-      className="grid w-full cursor-pointer grid-cols-[auto_1fr] items-center gap-5 rounded-lg bg-light-bg p-5 shadow-md"
     >
-      <input
-        className="scale-200 accent-btn-primary"
-        type="checkbox"
-        onClick={(e) => {
-          e.stopPropagation()
-          handleCheck(element)
-          setExpand(false)
-        }}
-        checked={element.checked}
-        readOnly
-      />
-      <div className="flex flex-col gap-2">
-        <div className="w-full">
-          <h3
-            className={`font-bold ${element.checked ? 'text-text-inactive line-through' : 'text-text-secondary'}`}
-          >
-            {title}
-          </h3>
+      <div className="flex w-full flex-row items-center gap-4">
+        <input
+          className="accent-btn-primary scale-200"
+          type="checkbox"
+          onClick={(e) => {
+            e.stopPropagation()
+            handleCheck(element)
+            setExpand(false)
+          }}
+          checked={element.checked}
+          readOnly
+        />
+        <h3
+          className={`flex-1 text-center font-bold ${element.checked ? 'text-text-inactive line-through' : 'text-text-secondary'}`}
+        >
+          {title}
+        </h3>
+        <div className="flex h-12 w-12 items-center justify-center">
           <AnimatePresence>
-            {expand && (
-              <motion.div
-                className="flex flex-col overflow-hidden"
-                initial={{ height: 0 }}
-                animate={{ height }}
-                exit={{ height: 0 }}
-                transition={{ duration: 0.2 }}
-                ref={ref}
-              >
-                <p className="text-text-secondary">{description}</p>
-                <DeleteButton deleteElement={deleteElement} id={element.id} />
-              </motion.div>
-            )}
+            {isDeleteActive && <DeleteButton func={handleDelete} />}
           </AnimatePresence>
         </div>
       </div>
+      <AnimatePresence>
+        {expand && (
+          <motion.div
+            className="text-center overflow-hidden"
+            ref={ref}
+            {...expandVariants}
+          >
+            <p className="text-text-secondary py-2">{description}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

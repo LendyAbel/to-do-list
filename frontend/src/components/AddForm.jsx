@@ -29,7 +29,7 @@ const AddForm = ({ handleClose, handleAdd }) => {
       <div className="flex w-3/4 flex-col items-start justify-center gap-2">
         <label
           className="text-text-primary block text-lg font-semibold"
-          for="title"
+          htmlFor="title"
         >
           Title:
         </label>
@@ -43,7 +43,7 @@ const AddForm = ({ handleClose, handleAdd }) => {
         />
         <label
           className="text-text-primary block text-lg font-semibold"
-          for="description"
+          htmlFor="description"
         >
           Description:
         </label>
