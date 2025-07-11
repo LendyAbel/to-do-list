@@ -1,12 +1,24 @@
-import { Heroe, ToDoList} from './components'
+import { Heroe, ToDoList, Login } from './components'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router'
 import data from './data.json'
 
 function App() {
   return (
-    <div className="relative flex flex-col items-center">
-      <Heroe />
-      <ToDoList />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/to-do-list"
+          element={
+            <div className="flex flex-col items-center">
+              <Heroe />
+              <ToDoList />
+            </div>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
