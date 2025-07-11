@@ -1,6 +1,6 @@
 import { IoAddCircleOutline, IoTrashBinOutline } from 'react-icons/io5'
 
-const MainButton = ({ label, icon, func, cancel }) => {
+const MainButton = ({ label, icon, func, deleteActive }) => {
   return (
     <button
       type="button"
@@ -12,7 +12,7 @@ const MainButton = ({ label, icon, func, cancel }) => {
     >
       {icon === 'add' && <IoAddCircleOutline className="size-10" />}
       {icon === 'delete' && <IoTrashBinOutline className="size-10" />}
-      {!cancel ? label : 'Cancel'}
+      {!deleteActive ? label : 'Cancel'}
     </button>
   )
 }
