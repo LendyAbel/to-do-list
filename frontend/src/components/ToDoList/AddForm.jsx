@@ -37,7 +37,7 @@ const AddForm = ({ handleClose }) => {
   }
 
   return (
-    <form
+    <form id='add-form'
       className="flex w-full flex-col items-center justify-center gap-4"
       onSubmit={handleSubmit}
     >
