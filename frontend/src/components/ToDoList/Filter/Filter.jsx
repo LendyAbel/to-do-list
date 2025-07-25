@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FilterButton } from '../components'
+import { FilterButton } from '../../../components'
 
 const Filter = ({ showToDo, showDone, showAll }) => {
   const [activeFilter, setActiveFilter] = useState([false, false, true])

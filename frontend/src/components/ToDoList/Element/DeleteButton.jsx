@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ConfirmationModal } from '../components'
+import { ConfirmationModal } from '../../../components'
 import { IoTrashBinOutline } from 'react-icons/io5'
 import { animate, motion, scale } from 'framer-motion'
 

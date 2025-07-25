@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
-import { Element, AddForm, Filter, MainButton } from '../components'
+import { Element, AddForm, Filter, MainButton } from '../../components'
 import { motion, AnimatePresence } from 'framer-motion'
-import dataList from '../data.json'
+import dataList from '../../data.json'
 
 const ToDoList = () => {
   const [list, setList] = useState([])
   const [listToShow, setListToShow] = useState([])
   const [formOpen, setFormOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState('all')
-  const [isDeleteActive, setIsDeleteActive] = useState('false')
+  const [isDeleteActive, setIsDeleteActive] = useState('true')
 
   // Animation for transitioning between screens ( form <-> list )
   const screenVariants = {
@@ -97,7 +97,12 @@ const ToDoList = () => {
           >
             <div className="flex items-center justify-center gap-5">
               <MainButton label="Add Element" icon="add" func={openForm} />
-              <MainButton label="Delete" cancel={isDeleteActive} icon="delete" func={activateDelete} />
+              <MainButton
+                label="Delete"
+                deleteActive={isDeleteActive}
+                icon="delete"
+                func={activateDelete}
+              />
             </div>
             <Filter showToDo={showToDo} showDone={showDone} showAll={showAll} />
             <AnimatePresence>
