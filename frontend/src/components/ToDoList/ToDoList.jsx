@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Element, AddForm, Filter, MainButton } from '../../components'
 import { motion, AnimatePresence } from 'framer-motion'
-import dataList from '../../data.json'
+import { getAll } from '../../services/toDoList'
 
 const ToDoList = () => {
   const [list, setList] = useState([])
   const [listToShow, setListToShow] = useState([])
   const [formOpen, setFormOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState('all')
-  const [isDeleteActive, setIsDeleteActive] = useState('true')
+  const [isDeleteActive, setIsDeleteActive] = useState(true)
 
   // Animation for transitioning between screens ( form <-> list )
   const screenVariants = {
@@ -27,7 +27,11 @@ const ToDoList = () => {
   }
 
   useEffect(() => {
-    setList(dataList)
+    const fetchData = async () => {
+      const list = await getAll()
+      setList(list)
+    }
+    fetchData()
   }, [])
 
   // Update the list to show based on the active filter
