@@ -2,12 +2,7 @@ import { useEffect, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Element, AddForm, Filter, MainButton } from '../../components'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  getAll,
-  createNew,
-  deleteById,
-  updateById,
-} from '../../services/toDoList'
+import { getAll, updateById } from '../../services/toDoList'
 
 // Animation for transitioning between screens ( form <-> list )
 const screenVariants = {
@@ -26,11 +21,10 @@ const itemVariants = {
 }
 
 const ToDoList = () => {
-  const queryClient = useQueryClient()
   const [listToShow, setListToShow] = useState([])
   const [formOpen, setFormOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState('all')
-  const [isDeleteActive, setIsDeleteActive] = useState(true)
+  const [isDeleteActive, setIsDeleteActive] = useState(false)
 
   const result = useQuery({
     queryKey: ['posts'],
@@ -38,34 +32,6 @@ const ToDoList = () => {
     retry: false,
   })
   const list = result.data ?? []
-
-  const createMutation = useMutation({
-    mutationFn: createNew,
-    onSuccess: (createdElement) => {
-      const list = queryClient.getQueryData(['posts'])
-      queryClient.setQueryData(['posts'], list.concat(createdElement))
-    },
-  })
-
-  const checkMutation = useMutation({
-    mutationFn: updateById,
-    onSuccess: (updatedElement) => {
-      const list = queryClient.getQueryData(['posts'])
-      const updatedList = list.map((el) =>
-        el.id === updatedElement.id ? updatedElement : el,
-      )
-      queryClient.setQueryData(['posts'], updatedList)
-    },
-  })
-
-  const deleteMutation = useMutation({
-    mutationFn: deleteById,
-    onSuccess: (deletedElement) => {
-      const list = queryClient.getQueryData(['posts'])
-      const updatedList = list.filter((el) => el.id !== deletedElement.id)
-      queryClient.setQueryData(['posts'], updatedList)
-    },
-  })
 
   // Update the list to show based on the active filter
   useEffect(() => {
@@ -86,21 +52,7 @@ const ToDoList = () => {
 
   const activateDelete = () => setIsDeleteActive(!isDeleteActive)
 
-  const handleAddForm = (element) => {
-    const newElement = { ...element, checked: false }
-    createMutation.mutate(newElement)
-  }
-
-  const handleCheck = (element) => {
-    const newElement = { ...element, checked: !element.checked }
-    checkMutation.mutate(newElement)
-  }
-
-  const handleDeleteElement = (element) => {
-    console.log(element)
-    deleteMutation.mutate(element)
-  }
-
+  //Filter functions
   const showToDo = () => setActiveFilter('todo')
 
   const showDone = () => setActiveFilter('done')
@@ -120,7 +72,7 @@ const ToDoList = () => {
             {...screenVariants}
             className="flex flex-col p-3"
           >
-            <AddForm handleClose={closeForm} handleAdd={handleAddForm} />
+            <AddForm handleClose={closeForm} />
           </motion.div>
         ) : (
           <motion.div
@@ -146,8 +98,6 @@ const ToDoList = () => {
                       <Element
                         key={element.id}
                         element={element}
-                        handleCheck={handleCheck}
-                        deleteElement={handleDeleteElement}
                         isDeleteActive={isDeleteActive}
                       />
                     </motion.div>

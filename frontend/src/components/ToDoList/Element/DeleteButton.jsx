@@ -1,10 +1,22 @@
 import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { deleteById } from '../../../services/toDoList'
 import { ConfirmationModal } from '../../../components'
 import { IoTrashBinOutline } from 'react-icons/io5'
 import { motion } from 'framer-motion'
 
-const DeleteButton = ({ func }) => {
+const DeleteButton = ({ element }) => {
+  const queryClient = useQueryClient()
   const [confirmOpen, setConfirmOpen] = useState(false)
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteById,
+    onSuccess: (deletedElement) => {
+      const list = queryClient.getQueryData(['posts'])
+      const updatedList = list.filter((el) => el.id !== deletedElement.id)
+      queryClient.setQueryData(['posts'], updatedList)
+    },
+  })
 
   const inOutVariants = {
     initial: { opacity: 0, scale: 0.5 },
@@ -19,7 +31,7 @@ const DeleteButton = ({ func }) => {
   }
 
   const handleYes = () => {
-    func()
+    deleteMutation.mutate(element)
     setConfirmOpen(false)
   }
 
