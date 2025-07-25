@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ConfirmationModal } from '../../../components'
 import { IoTrashBinOutline } from 'react-icons/io5'
-import { animate, motion, scale } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const DeleteButton = ({ func }) => {
   const [confirmOpen, setConfirmOpen] = useState(false)
@@ -10,7 +10,7 @@ const DeleteButton = ({ func }) => {
     initial: { opacity: 0, scale: 0.5 },
     animate: { opacity: 1, scale: 1 },
     exit: { opacity: 0, scale: 0.5 },
-    transition: {duration: 0.2}
+    transition: { duration: 0.2 },
   }
 
   const handleClick = (e) => {

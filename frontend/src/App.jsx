@@ -1,6 +1,5 @@
 import { Heroe, ToDoList, Login } from './components'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router'
-import data from './data.json'
 
 function App() {
   return (

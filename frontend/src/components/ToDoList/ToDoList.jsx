@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Element, AddForm, Filter, MainButton } from '../../components'
 import { motion, AnimatePresence } from 'framer-motion'
-import { getAll } from '../../services/toDoList'
+import { getAll, createNew, deleteById, updateById } from '../../services/toDoList'
 
 const ToDoList = () => {
   const [list, setList] = useState([])
@@ -51,21 +51,22 @@ const ToDoList = () => {
 
   const closeForm = () => setFormOpen(false)
 
-  const addElement = (element) => setList((prev) => [element, ...prev])
-
   const activateDelete = () => setIsDeleteActive(!isDeleteActive)
 
-  const deleteElement = (id) =>
+  const handleDeleteElement = async (id) => {
+    const deletedElement = await deleteById(id)
     setList((prev) => prev.filter((el) => el.id !== id))
+  }
 
-  const handleAddForm = (element) => {
+  const handleAddForm = async (element) => {
     const { title, description } = element
     const newElement = {
-      id: new Date().getTime(),
       title,
       description,
+      checked: false,
     }
-    addElement(newElement)
+    const createdElement = await createNew(newElement)
+    setList((prev) => [element, ...prev])
   }
 
   const handleCheck = (element) => {
@@ -73,6 +74,7 @@ const ToDoList = () => {
     const updatedList = list.map((el) => {
       return el.id === element.id ? newElement : el
     })
+    const updatedElement = updateById(newElement)
     setList(updatedList)
   }
 
@@ -118,7 +120,7 @@ const ToDoList = () => {
                         key={element.id}
                         element={element}
                         handleCheck={handleCheck}
-                        deleteElement={deleteElement}
+                        deleteElement={handleDeleteElement}
                         isDeleteActive={isDeleteActive}
                       />
                     </motion.div>
