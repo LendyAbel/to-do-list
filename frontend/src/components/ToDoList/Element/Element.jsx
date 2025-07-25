@@ -1,19 +1,16 @@
 import { useRef, useState, useEffect } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
 import { DeleteButton } from '../../../components'
+import { updateById } from '../../../services/toDoList'
 
-const Element = ({ element, handleCheck, deleteElement, isDeleteActive }) => {
+const Element = ({ element, isDeleteActive }) => {
+  const queryClient = useQueryClient()
+
   const [expand, setExpand] = useState(false)
   const [height, setHeight] = useState(0)
   const ref = useRef(null)
   const { title, description } = element
-
-  const expandVariants = {
-    initial: { height: 0 },
-    animate: { height },
-    exit: { height: 0 },
-    transition: { duration: 0.2 },
-  }
 
   useEffect(() => {
     if (ref.current) {
@@ -24,9 +21,31 @@ const Element = ({ element, handleCheck, deleteElement, isDeleteActive }) => {
     }
   }, [expand, description])
 
-  const handleExpand = () => setExpand((prev) => !prev)
+  const expandVariants = {
+    initial: { height: 0 },
+    animate: { height },
+    exit: { height: 0 },
+    transition: { duration: 0.2 },
+  }
 
-  const handleDelete = () => deleteElement(element.id)
+  const checkMutation = useMutation({
+    mutationFn: updateById,
+    onSuccess: (updatedElement) => {
+      const list = queryClient.getQueryData(['posts'])
+      const updatedList = list.map((el) =>
+        el.id === updatedElement.id ? updatedElement : el,
+      )
+      queryClient.setQueryData(['posts'], updatedList)
+    },
+  })
+
+  const handleExpand = () => setExpand((prev) => !prev)
+  const handleCheckClick = (e) => {
+    e.stopPropagation()
+    const newElement = { ...element, checked: !element.checked }
+    checkMutation.mutate(newElement)
+    setExpand(false)
+  }
 
   return (
     <div
@@ -37,11 +56,7 @@ const Element = ({ element, handleCheck, deleteElement, isDeleteActive }) => {
         <input
           className="accent-btn-primary scale-200"
           type="checkbox"
-          onClick={(e) => {
-            e.stopPropagation()
-            handleCheck(element)
-            setExpand(false)
-          }}
+          onClick={handleCheckClick}
           checked={element.checked}
           readOnly
         />
@@ -52,14 +67,14 @@ const Element = ({ element, handleCheck, deleteElement, isDeleteActive }) => {
         </h3>
         <div className="flex h-12 w-12 items-center justify-center">
           <AnimatePresence>
-            {isDeleteActive && <DeleteButton func={handleDelete} />}
+            {isDeleteActive && <DeleteButton element={element} />}
           </AnimatePresence>
         </div>
       </div>
       <AnimatePresence>
         {expand && (
           <motion.div
-            className="text-center overflow-hidden"
+            className="overflow-hidden text-center"
             ref={ref}
             {...expandVariants}
           >

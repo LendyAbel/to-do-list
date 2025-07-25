@@ -1,38 +1,37 @@
 import { useEffect, useState } from 'react'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Element, AddForm, Filter, MainButton } from '../../components'
 import { motion, AnimatePresence } from 'framer-motion'
-import { getAll, createNew, deleteById, updateById } from '../../services/toDoList'
+import { getAll, updateById } from '../../services/toDoList'
+
+// Animation for transitioning between screens ( form <-> list )
+const screenVariants = {
+  initial: { opacity: 0, scale: 0.8 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.8 },
+  transition: { duration: 0.3 },
+}
+
+// Animation for each item in the list
+const itemVariants = {
+  initial: { opacity: 0, scale: 0.8 },
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.8 },
+  transition: { duration: 0.3 },
+}
 
 const ToDoList = () => {
-  const [list, setList] = useState([])
   const [listToShow, setListToShow] = useState([])
   const [formOpen, setFormOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState('all')
-  const [isDeleteActive, setIsDeleteActive] = useState(true)
+  const [isDeleteActive, setIsDeleteActive] = useState(false)
 
-  // Animation for transitioning between screens ( form <-> list )
-  const screenVariants = {
-    initial: { opacity: 0, scale: 0.8 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.8 },
-    transition: { duration: 0.3 },
-  }
-
-  // Animation for each item in the list
-  const itemVariants = {
-    initial: { opacity: 0, scale: 0.8 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.8 },
-    transition: { duration: 0.3 },
-  }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const list = await getAll()
-      setList(list)
-    }
-    fetchData()
-  }, [])
+  const result = useQuery({
+    queryKey: ['posts'],
+    queryFn: getAll,
+    retry: false,
+  })
+  const list = result.data ?? []
 
   // Update the list to show based on the active filter
   useEffect(() => {
@@ -53,36 +52,16 @@ const ToDoList = () => {
 
   const activateDelete = () => setIsDeleteActive(!isDeleteActive)
 
-  const handleDeleteElement = async (id) => {
-    const deletedElement = await deleteById(id)
-    setList((prev) => prev.filter((el) => el.id !== id))
-  }
-
-  const handleAddForm = async (element) => {
-    const { title, description } = element
-    const newElement = {
-      title,
-      description,
-      checked: false,
-    }
-    const createdElement = await createNew(newElement)
-    setList((prev) => [element, ...prev])
-  }
-
-  const handleCheck = (element) => {
-    const newElement = { ...element, checked: !element.checked }
-    const updatedList = list.map((el) => {
-      return el.id === element.id ? newElement : el
-    })
-    const updatedElement = updateById(newElement)
-    setList(updatedList)
-  }
-
+  //Filter functions
   const showToDo = () => setActiveFilter('todo')
 
   const showDone = () => setActiveFilter('done')
 
   const showAll = () => setActiveFilter('all')
+
+  if (result.isLoading) return <div>Cargando...</div>
+
+  if (result.isError) return <div>Error al cargar la lista</div>
 
   return (
     <div className="bg-primary-bg max-h-[80vh] w-[96%] max-w-3xl rounded-lg p-3 shadow-lg">
@@ -93,7 +72,7 @@ const ToDoList = () => {
             {...screenVariants}
             className="flex flex-col p-3"
           >
-            <AddForm handleClose={closeForm} handleAdd={handleAddForm} />
+            <AddForm handleClose={closeForm} />
           </motion.div>
         ) : (
           <motion.div
@@ -119,8 +98,6 @@ const ToDoList = () => {
                       <Element
                         key={element.id}
                         element={element}
-                        handleCheck={handleCheck}
-                        deleteElement={handleDeleteElement}
                         isDeleteActive={isDeleteActive}
                       />
                     </motion.div>
