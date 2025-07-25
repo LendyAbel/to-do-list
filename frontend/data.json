@@ -1,5 +1,12 @@
 {
-  "posts": [],
+  "posts": [
+    {
+      "id": "10ce",
+      "title": "hola hola",
+      "description": "asdasdasd",
+      "checked": false
+    }
+  ],
   "users": [
     {
       "id": 1,

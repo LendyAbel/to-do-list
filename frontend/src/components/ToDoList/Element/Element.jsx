@@ -26,7 +26,7 @@ const Element = ({ element, handleCheck, deleteElement, isDeleteActive }) => {
 
   const handleExpand = () => setExpand((prev) => !prev)
 
-  const handleDelete = () => deleteElement(element.id)
+  const handleDelete = () => deleteElement(element)
 
   return (
     <div
