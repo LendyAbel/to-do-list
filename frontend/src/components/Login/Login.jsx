@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { LoginForm, RegisterForm } from '../'
-import { div } from 'motion/react-client'
 
 const Login = () => {
   const [optionSelected, setOptionSelected] = useState('login')
