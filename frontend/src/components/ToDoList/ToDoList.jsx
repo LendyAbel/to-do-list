@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Element, AddForm, Filter, MainButton } from '../../components'
+import { Element, AddForm, Filter, MainButton } from '../'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getAll, updateById } from '../../services/toDoList'
 

@@ -6,7 +6,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<div className="flex flex-col items-center justify-center h-screen">
+              <Login />
+            </div>} />
         <Route
           path="/toDoList"
           element={
