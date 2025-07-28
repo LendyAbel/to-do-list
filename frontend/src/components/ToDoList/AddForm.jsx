@@ -1,15 +1,30 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion } from 'framer-motion'
+import { form } from 'motion/react-client'
 import { useState } from 'react'
 
-const AddForm = ({ handleClose, handleAdd }) => {
+import { createNew } from '../../services/toDoList'
+
+const AddForm = ({ handleClose }) => {
+  const queryClient = useQueryClient()
+
   const [formData, setFormData] = useState({
     title: '',
     description: '',
   })
 
+  const createMutation = useMutation({
+    mutationFn: createNew,
+    onSuccess: (createdElement) => {
+      const list = queryClient.getQueryData(['posts'])
+      queryClient.setQueryData(['posts'], list.concat(createdElement))
+    },
+  })
+
   const handleSubmit = (e) => {
     e.preventDefault()
-    handleAdd(formData)
+    const newElement = { ...formData, checked: false }
+    createMutation.mutate(newElement)
     handleClose()
   }
 
@@ -38,7 +53,7 @@ const AddForm = ({ handleClose, handleAdd }) => {
           name="title"
           value={formData.title}
           onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          className="w-full rounded-lg border bg-light-bg p-1 shadow-md"
+          className="bg-light-bg w-full rounded-lg border p-1 shadow-md"
           required
         />
         <label
@@ -53,7 +68,7 @@ const AddForm = ({ handleClose, handleAdd }) => {
           onChange={(e) =>
             setFormData({ ...formData, description: e.target.value })
           }
-          className="w-full resize-none rounded-lg border bg-light-bg p-1 shadow-md"
+          className="bg-light-bg w-full resize-none rounded-lg border p-1 shadow-md"
           required
         />
       </div>

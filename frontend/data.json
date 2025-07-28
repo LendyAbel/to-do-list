@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "id": "3481",
+      "title": "asdasd",
+      "description": "asdasd",
+      "checked": true
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "johndoe@gmail.com",
+      "password": "123"
+    }
+  ]
+}
