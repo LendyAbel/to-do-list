@@ -1,0 +1,30 @@
+{
+  "posts": [
+    {
+      "id": "357f",
+      "title": "hola hola",
+      "description": "sisisisisis\n",
+      "checked": true
+    },
+    {
+      "id": "7086",
+      "title": "Hola Hola",
+      "description": "sisisisi",
+      "checked": false
+    },
+    {
+      "id": "4540",
+      "title": "asdasdadasdad",
+      "description": "asdadsasdasda",
+      "checked": false
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "johndoe@gmail.com",
+      "password": "123"
+    }
+  ]
+}
