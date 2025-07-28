@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Element, AddForm, Filter, MainButton } from '../../components'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -21,7 +21,6 @@ const itemVariants = {
 }
 
 const ToDoList = () => {
-  const [listToShow, setListToShow] = useState([])
   const [formOpen, setFormOpen] = useState(false)
   const [activeFilter, setActiveFilter] = useState('all')
   const [isDeleteActive, setIsDeleteActive] = useState(false)
@@ -33,18 +32,12 @@ const ToDoList = () => {
   })
   const list = result.data ?? []
 
-  // Update the list to show based on the active filter
-  useEffect(() => {
-    if (activeFilter === 'all') {
-      setListToShow(list)
-    }
-    if (activeFilter === 'todo') {
-      setListToShow(list.filter((el) => !el.checked))
-    }
-    if (activeFilter === 'done') {
-      setListToShow(list.filter((el) => el.checked))
-    }
-  }, [list, activeFilter])
+  const filteredList = useMemo(() => {
+  if (activeFilter === 'all') return list
+  if (activeFilter === 'todo') return list.filter((el) => !el.checked)
+  if (activeFilter === 'done') return list.filter((el) => el.checked)
+  return list
+}, [list, activeFilter])
 
   const openForm = () => setFormOpen(true)
 
@@ -92,7 +85,7 @@ const ToDoList = () => {
             <Filter showToDo={showToDo} showDone={showDone} showAll={showAll} />
             <AnimatePresence>
               <div className="bg-primary-bg flex max-h-[56vh] flex-col gap-2 overflow-y-auto rounded-lg p-3">
-                {listToShow.map((element) => {
+                {filteredList.map((element) => {
                   return (
                     <motion.div key={element.id} layout {...itemVariants}>
                       <Element
