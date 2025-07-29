@@ -1,0 +1,22 @@
+{
+  "list": [
+    {
+      "title": "Prueba",
+      "description": "Esto es una prueba del servidor",
+      "checked": false,
+      "id": "mIMjfu"
+    },
+    {
+      "title": "Otra Prueba",
+      "description": "Esto es una prueba del servidor",
+      "checked": false,
+      "id": "RXvhEq"
+    },
+    {
+      "title": "Otra Prueba",
+      "description": "Esto es una prueba del servidor",
+      "checked": false,
+      "id": "ugfMfa"
+    }
+  ]
+}
