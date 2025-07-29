@@ -76,6 +76,7 @@ listRouter.post('/', async (req, res) => {
     checked: false,
     id: generateId(),
   }
+
   const db = await listDB
   db.data.list.push(newElement)
   await db.write()
@@ -88,6 +89,20 @@ listRouter.post('/', async (req, res) => {
     })
 })
 
+listRouter.put('/:id', async (req,res)=>{
+  const id = req.params.id
+  const updatedElement = req.body
+  logger.info('Recived request to update item with id:', id)
+
+  const db = await listDB
+  db.data.list = db.data.list.map(element => element.id === id ? updatedElement : element)
+  await db.write()
+
+  res.status(200).json(updatedElement).end(() => {
+    logger.info('Item updated successfully:', updatedElement)
+  })
+})
+
 listRouter.delete('/:id', async (req, res) => {
   const id = req.params.id
   logger.info('Recived request to delete item with id:', id)
@@ -95,7 +110,7 @@ listRouter.delete('/:id', async (req, res) => {
   const db = await listDB
   db.data.list = db.data.list.filter(element => element.id !== id)
   await db.write()
-  
+
   res.status(204).end(() => {
     logger.info(`Item with id ${id} deleted successfully`)
   })

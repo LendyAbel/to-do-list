@@ -3,7 +3,7 @@
     {
       "title": "Prueba",
       "description": "Esto es una prueba del servidor",
-      "checked": false,
+      "checked": true,
       "id": "mIMjfu"
     }
   ]
