@@ -2,15 +2,15 @@ const listRouter = require('express').Router()
 const { JSONFilePreset } = require('lowdb/node')
 const path = require('path')
 
+const logger = require('../utils/logger')
+
 const { generateId } = require('../utils/list_helper')
 
 const dbPath = path.join(__dirname, '../db/db.json')
 const listDB = JSONFilePreset(dbPath, { list: [] })
 
 listRouter.get('/', async (req, res) => {
-  console.log('----------------')
-  console.log('Recived request to get list')
-  console.log('----------------')
+  logger.info('Recived request to get list')
 
   const db = await listDB
   const { list } = db.data
@@ -18,14 +18,12 @@ listRouter.get('/', async (req, res) => {
     .status(200)
     .json(list)
     .end(() => {
-      console.log('List sent successfully')
+      logger.info('List sent successfully')
     })
 })
 
 listRouter.post('/', async (req, res) => {
-  console.log('----------------')
-  console.log('Recived request to add item:', req.body)
-  console.log('----------------')
+  logger.info('Recived request to add item:', req.body)
 
   const { title, description } = req.body
 
@@ -41,7 +39,7 @@ listRouter.post('/', async (req, res) => {
     .status(201)
     .json(newElement)
     .end(() => {
-      console.log('Item added successfully:', newElement)
+      logger.info('Item added successfully:', newElement)
     })
 })
 
