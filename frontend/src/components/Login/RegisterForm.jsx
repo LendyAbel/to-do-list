@@ -1,24 +1,16 @@
 import { useState } from 'react'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { creatNewUser } from '../../services/users'
 
 const RegisterForm = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [newUser, setNewUser] = useState({})
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const { accessToken, user } = await register({ email, password });
-    // localStorage.setItem('token', accessToken);   // optional
-    alert(`Welcome, ${user.email}!`);
-  } catch (err) {
-    // Axios puts details under err.response
-    const msg =
-      err.response?.data?.message ||
-      err.message ||
-      'Registration failed';
-    alert(msg);
+    e.preventDefault()
+    const userCreated = await creatNewUser(newUser)
+    console.log('New user created:', userCreated)
   }
-};
 
   return (
     <form
@@ -27,24 +19,46 @@ const RegisterForm = () => {
     >
       <div className="flex flex-col items-center justify-center gap-2">
         <div className="flex w-full justify-between gap-2">
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="username">Username:</label>
           <input
-            name="email"
-            type="email"
+            name="username"
+            type="username"
             onChange={(e) => {
-              setEmail(e.target.value)
+              setNewUser({ ...newUser, username: e.target.value })
             }}
+            required
           />
         </div>
         <div className="flex w-full justify-between gap-2">
+          <label htmlFor="name">Name:</label>
+          <input
+            name="name"
+            type="name"
+            onChange={(e) => {
+              setNewUser({...newUser, name:e.target.value})
+            }}
+            required
+          />
+        </div>
+        <div className="relative flex w-full items-center justify-between gap-2">
           <label htmlFor="password">Password:</label>
           <input
             name="password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             onChange={(e) => {
-              setPassword(e.target.value)
+              setNewUser({...newUser, password: e.target.value})
             }}
+            required
           />
+          <div
+            className="absolute right-1 hover:bg-black/20"
+            onClick={(e) => {
+              e.stopPropagation
+              setShowPassword(!showPassword)
+            }}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
         </div>
       </div>
       <button type="submit" className="h-10 w-20 bg-amber-400">
