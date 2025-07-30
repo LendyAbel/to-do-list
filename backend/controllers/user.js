@@ -24,12 +24,13 @@ userRouter.get('/', async (req, res) => {
         logger.error('Users not found')
       })
   }
-
-  const { users } = db.data
+  console.log('db.data.users------', db.data.users)
+  
+  const usersToShow = db.data.users.map(({passwordHash,...resto})=> resto) //Deleting hashpassword for security
 
   return res
     .status(200)
-    .json(users)
+    .json(usersToShow)
     .end(() => {
       logger.info('Users sent successfully')
     })
@@ -70,6 +71,30 @@ userRouter.post('/', async (req, res) => {
     .json(newUser)
     .end(() => {
       logger.info('User added successfully:', newUser)
+    })
+})
+
+userRouter.put('/:id', async (req, res) => {
+  logger.info('Recived request to update item with id:', id)
+  const id = req.params.id
+  const { username, password, name } = req.body
+
+  const saltRounds = 10
+  const passwordHash = await bcrypt.hash(password, saltRounds)
+
+  const updatedUser = { username, name, passwordHash, id }
+
+  const db = await listDB
+  await db.read()
+
+  db.data.users = db.data.users.map(user => (user.id === id ? updatedUser : user))
+  await db.write()
+
+  res
+    .status(200)
+    .json(updatedUser)
+    .end(() => {
+      logger.info('User updated successfully:', updatedUser)
     })
 })
 
