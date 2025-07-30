@@ -5,12 +5,14 @@
       "description": "Esto es una prueba del servidor",
       "checked": false,
       "id": "mIMjfu"
-    },
+    }
+  ],
+  "users": [
     {
-      "title": "Filter",
-      "description": "Probando el filtro",
-      "checked": false,
-      "id": "E4Kzns"
+      "username": "Lendy",
+      "name": "Lendy Sanchez",
+      "passwordHash": "$2b$10$Le6z1AJO.6m16aHL1OmTHefIgaIvY50yacov/46m/9r6uHJlBTMve",
+      "id": "AtjlbH"
     }
   ]
 }
