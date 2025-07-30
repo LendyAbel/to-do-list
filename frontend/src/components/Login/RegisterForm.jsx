@@ -8,6 +8,7 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    
     const userCreated = await creatNewUser(newUser)
     console.log('New user created:', userCreated)
   }
