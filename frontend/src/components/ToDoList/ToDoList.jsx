@@ -1,19 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Element, AddForm, Filter, MainButton } from '../'
+import { useState } from 'react'
+import { List, AddForm, Filter, MainButton } from '../'
 import { motion, AnimatePresence } from 'framer-motion'
-import { getAll, updateById } from '../../services/toDoList'
 
 // Animation for transitioning between screens ( form <-> list )
 const screenVariants = {
-  initial: { opacity: 0, scale: 0.8 },
-  animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.8 },
-  transition: { duration: 0.3 },
-}
-
-// Animation for each item in the list
-const itemVariants = {
   initial: { opacity: 0, scale: 0.8 },
   animate: { opacity: 1, scale: 1 },
   exit: { opacity: 0, scale: 0.8 },
@@ -25,19 +15,6 @@ const ToDoList = () => {
   const [activeFilter, setActiveFilter] = useState('all')
   const [isDeleteActive, setIsDeleteActive] = useState(false)
 
-  const result = useQuery({
-    queryKey: ['posts'],
-    queryFn: getAll,
-    retry: false,
-  })
-  const list = result.data ?? []
-
-  const filteredList = useMemo(() => {
-  if (activeFilter === 'all') return list
-  if (activeFilter === 'todo') return list.filter((el) => !el.checked)
-  if (activeFilter === 'done') return list.filter((el) => el.checked)
-  return list
-}, [list, activeFilter])
 
   const openForm = () => setFormOpen(true)
 
@@ -52,9 +29,7 @@ const ToDoList = () => {
 
   const showAll = () => setActiveFilter('all')
 
-  if (result.isLoading) return <div>Cargando...</div>
 
-  if (result.isError) return <div>Error al cargar la lista</div>
 
   return (
     <div className="bg-primary-bg max-h-[80vh] w-[96%] max-w-3xl rounded-lg p-3 shadow-lg">
@@ -83,21 +58,7 @@ const ToDoList = () => {
               />
             </div>
             <Filter showToDo={showToDo} showDone={showDone} showAll={showAll} />
-            <AnimatePresence>
-              <div className="bg-primary-bg flex max-h-[56vh] flex-col gap-2 overflow-y-auto rounded-lg p-3">
-                {filteredList.map((element) => {
-                  return (
-                    <motion.div key={element.id} layout {...itemVariants}>
-                      <Element
-                        key={element.id}
-                        element={element}
-                        isDeleteActive={isDeleteActive}
-                      />
-                    </motion.div>
-                  )
-                })}
-              </div>
-            </AnimatePresence>
+            <List activeFilter={activeFilter} isDeleteActive={isDeleteActive} />
           </motion.div>
         )}
       </AnimatePresence>
