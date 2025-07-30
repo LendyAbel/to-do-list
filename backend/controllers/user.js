@@ -8,7 +8,7 @@ const logger = require('../utils/logger')
 const { generateId } = require('../utils/list_helper')
 
 const dbPath = path.join(__dirname, '../db/db.json')
-const listDB = JSONFilePreset(dbPath, { list: [], user: [] })
+const listDB = JSONFilePreset(dbPath, { list: [], users: [] })
 
 userRouter.get('/', async (req, res) => {
   logger.info('Recived request to get user')
@@ -16,7 +16,7 @@ userRouter.get('/', async (req, res) => {
   const db = await listDB
   await db.read()
 
-  if (!db.data.user) {
+  if (!db.data.users) {
     return res
       .status(500)
       .json({ error: 'Users not found' })
@@ -25,14 +25,14 @@ userRouter.get('/', async (req, res) => {
       })
   }
 
-  const {user} = db.data
+  const { users } = db.data
 
   return res
-      .status(200)
-      .json(user)
-      .end(() => {
-        logger.info('Users sent successfully')
-      })
+    .status(200)
+    .json(users)
+    .end(() => {
+      logger.info('Users sent successfully')
+    })
 })
 
 userRouter.post('/', async (req, res) => {
@@ -62,7 +62,7 @@ userRouter.post('/', async (req, res) => {
   const db = await listDB
   await db.read()
 
-  db.data.user.push(newUser)
+  db.data.users.push(newUser)
   await db.write()
 
   return res
@@ -71,6 +71,22 @@ userRouter.post('/', async (req, res) => {
     .end(() => {
       logger.info('User added successfully:', newUser)
     })
+})
+
+userRouter.delete('/:id', async (req, res) => {
+  const id = req.params.id
+  console.log()
+  logger.info('Recived request to delete item with id:', id)
+
+  const db = await listDB
+  await db.read()
+
+  db.data.users = db.data.users.filter(user => user.id !== id)
+  await db.write()
+
+  res.status(204).end(() => {
+    logger.info(`User with id ${id} deleted successfully`)
+  })
 })
 
 module.exports = userRouter

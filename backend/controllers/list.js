@@ -7,7 +7,7 @@ const logger = require('../utils/logger')
 const { generateId } = require('../utils/list_helper')
 
 const dbPath = path.join(__dirname, '../db/db.json')
-const listDB = JSONFilePreset(dbPath, { list: [], user: [] })
+const listDB = JSONFilePreset(dbPath, { list: [], users: [] })
 
 listRouter.get('/', async (req, res) => {
   logger.info('Recived request to get list')
