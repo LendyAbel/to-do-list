@@ -10,6 +10,31 @@ const { generateId } = require('../utils/list_helper')
 const dbPath = path.join(__dirname, '../db/db.json')
 const listDB = JSONFilePreset(dbPath, { list: [], user: [] })
 
+userRouter.get('/', async (req, res) => {
+  logger.info('Recived request to get user')
+
+  const db = await listDB
+  await db.read()
+
+  if (!db.data.user) {
+    return res
+      .status(500)
+      .json({ error: 'Users not found' })
+      .end(() => {
+        logger.error('Users not found')
+      })
+  }
+
+  const {user} = db.data
+
+  return res
+      .status(200)
+      .json(user)
+      .end(() => {
+        logger.info('Users sent successfully')
+      })
+})
+
 userRouter.post('/', async (req, res) => {
   logger.info('Recived request to add usser:', req.body)
 
@@ -31,7 +56,7 @@ userRouter.post('/', async (req, res) => {
     username,
     name,
     passwordHash,
-    id: generateId()
+    id: generateId(),
   }
 
   const db = await listDB
