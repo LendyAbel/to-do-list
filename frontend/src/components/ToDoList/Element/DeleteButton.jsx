@@ -11,10 +11,8 @@ const DeleteButton = ({ element }) => {
 
   const deleteMutation = useMutation({
     mutationFn: deleteById,
-    onSuccess: (deletedElement) => {
-      const list = queryClient.getQueryData(['posts'])
-      const updatedList = list.filter((el) => el.id !== deletedElement.id)
-      queryClient.setQueryData(['posts'], updatedList)
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
     },
   })
 

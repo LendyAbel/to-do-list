@@ -15,7 +15,7 @@ const ToDoList = () => {
   const [activeFilter, setActiveFilter] = useState('all')
   const [isDeleteActive, setIsDeleteActive] = useState(false)
 
-
+  //Form functions
   const openForm = () => setFormOpen(true)
 
   const closeForm = () => setFormOpen(false)

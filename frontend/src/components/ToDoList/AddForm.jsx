@@ -15,9 +15,8 @@ const AddForm = ({ handleClose }) => {
 
   const createMutation = useMutation({
     mutationFn: createNew,
-    onSuccess: (createdElement) => {
-      const list = queryClient.getQueryData(['posts'])
-      queryClient.setQueryData(['posts'], list.concat(createdElement))
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['posts'] })
     },
   })
 
