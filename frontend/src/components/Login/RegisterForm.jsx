@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router'
 import { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { creatNewUser } from '../../services/users'
@@ -5,11 +6,12 @@ import { creatNewUser } from '../../services/users'
 const RegisterForm = ({ setRegister }) => {
   const [newUser, setNewUser] = useState({})
   const [showPassword, setShowPassword] = useState(false)
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
     const userCreated = await creatNewUser(newUser)
+    navigate('/toDoList')
     console.log('New user created:', userCreated)
   }
 
