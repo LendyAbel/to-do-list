@@ -2,25 +2,16 @@ import { useState } from 'react'
 import { LoginForm, RegisterForm } from '../'
 
 const Login = () => {
-  const [optionSelected, setOptionSelected] = useState('login')
+  const [register, setRegister] = useState(false)
 
   return (
-    <div className="bg-primary-bg flex max-h-[80vh] w-[96%] max-w-3xl flex-col items-center justify-center rounded-lg p-3 shadow-lg">
-      {optionSelected === 'login' && <LoginForm />}
-      {optionSelected === 'register' && <RegisterForm />}
-      <div className="flex items-center justify-center gap-3">
-        <button
-          className="cursor-pointer border p-1"
-          onClick={() => setOptionSelected('login')}
-        >
-          Login
-        </button>
-        <button
-          className="cursor-pointer border p-1"
-          onClick={() => setOptionSelected('register')}
-        >
-          Register
-        </button>
+    <div className="flex min-h-screen items-center justify-center p-4">
+      <div className="w-full max-w-md rounded-2xl border border-white/20 bg-white/95 p-8 shadow-2xl backdrop-blur-sm">
+        {!register ? (
+          <LoginForm setRegister={setRegister} />
+        ) : (
+          <RegisterForm setRegister={setRegister} />
+        )}
       </div>
     </div>
   )

@@ -13,6 +13,7 @@ const screenVariants = {
 const ToDoList = () => {
   const [formOpen, setFormOpen] = useState(false)
   const [isDeleteActive, setIsDeleteActive] = useState(false)
+  const [activeFilter, setActiveFilter] = useState('all')
 
   //Form functions
   const openForm = () => setFormOpen(true)
