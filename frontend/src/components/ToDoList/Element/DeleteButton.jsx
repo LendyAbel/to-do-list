@@ -38,13 +38,17 @@ const DeleteButton = ({ element }) => {
   return (
     <motion.div className="relative" {...inOutVariants}>
       <button
-        className="flex cursor-pointer items-center rounded-lg bg-red-300 p-2 hover:bg-red-400"
+        className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-500 text-white shadow-lg transition-all duration-200 hover:bg-red-600 hover:shadow-xl focus:ring-2 focus:ring-red-500/30 focus:outline-none"
         onClick={handleClick}
       >
-        <IoTrashBinOutline className="size-6" />
+        <IoTrashBinOutline className="size-5" />
       </button>
       {confirmOpen && (
-        <ConfirmationModal handleYes={handleYes} handleNo={handleNo} />
+        <ConfirmationModal
+          handleYes={handleYes}
+          handleNo={handleNo}
+          setConfirmOpen={setConfirmOpen}
+        />
       )}
     </motion.div>
   )

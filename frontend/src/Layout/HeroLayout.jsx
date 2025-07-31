@@ -1,6 +1,6 @@
 const HeroLayout = ({ children }) => {
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-br from-[#AFB42B] via-[#AFB42B] to-[#607D8B]">
+    <div className="min-h-screen bg-gradient-to-br from-[#AFB42B] via-[#AFB42B] to-[#607D8B]">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="relative px-6 py-2 sm:py-3 lg:py-4">
@@ -21,7 +21,7 @@ const HeroLayout = ({ children }) => {
       </div>
 
       {/* Content Section */}
-      <div className="flex flex-1 items-center justify-center">{children}</div>
+      <div>{children}</div>
     </div>
   )
 }

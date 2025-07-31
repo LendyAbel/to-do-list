@@ -4,48 +4,64 @@ import { useMemo } from 'react'
 import { Element } from '../'
 import { motion } from 'framer-motion'
 
-// Animation for each item in the list
 const itemVariants = {
-    initial: { opacity: 0, scale: 0.8 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.8 },
-    transition: { duration: 0.3 },
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -20 },
+  transition: { duration: 0.2 },
 }
 
-const List = ({ activeFilter, isDeleteActive }) => {
-    const result = useQuery({
-        queryKey: ['posts'],
-        queryFn: getAll,
-        retry: false,
-    })
-    const list = result.data ?? []
+const List = ({ activeFilter, isDeleteActive, className }) => {
+  const result = useQuery({
+    queryKey: ['posts'],
+    queryFn: getAll,
+    retry: false,
+  })
 
-    const filteredList = useMemo(() => {
-        if (activeFilter === 'all') return list
-        if (activeFilter === 'todo') return list.filter((el) => !el.checked)
-        if (activeFilter === 'done') return list.filter((el) => el.checked)
-        return list
-    }, [list, activeFilter])
+  const list = result.data ?? []
 
-    if (result.isLoading) return <div>Cargando...</div>
+  const filteredList = useMemo(() => {
+    if (activeFilter === 'all') return list
+    if (activeFilter === 'todo') return list.filter((el) => !el.checked)
+    if (activeFilter === 'done') return list.filter((el) => el.checked)
+    return list
+  }, [list, activeFilter])
 
-    if (result.isError) return <div>Error al cargar la lista</div>
-
+  if (result.isLoading) {
     return (
-        <div className="bg-primary-bg flex max-h-[56vh] flex-col gap-2 overflow-y-auto rounded-lg p-3">
-            {filteredList.map((element) => {
-                return (
-                    <motion.div key={element.id} layout {...itemVariants}>
-                        <Element
-                            key={element.id}
-                            element={element}
-                            isDeleteActive={isDeleteActive}
-                        />
-                    </motion.div>
-                )
-            })}
-        </div>
+      <div className="flex items-center justify-center py-12">
+        <div className="text-lg text-[#9e9e9e]">Loading tasks...</div>
+      </div>
     )
+  }
+
+  if (result.isError) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-lg text-red-500">Error loading tasks</div>
+      </div>
+    )
+  }
+
+  if (filteredList.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-lg text-[#9e9e9e]">No tasks found</div>
+      </div>
+    )
+  }
+
+  return (
+    <div
+      className={`max-h-[60vh] overflow-y-auto px-2 py-3 ${className || ''}`}
+    >
+      {filteredList.map((element) => (
+        <motion.div key={element.id} layout {...itemVariants}>
+          <Element element={element} isDeleteActive={isDeleteActive} />
+        </motion.div>
+      ))}
+    </div>
+  )
 }
 
 export default List
