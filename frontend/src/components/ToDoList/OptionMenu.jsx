@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useContext } from 'react'
 import { useNavigate } from 'react-router'
 import { motion, AnimatePresence } from 'framer-motion'
-
+import { IsLoginContext } from '../../useContext/IsLoginContext'
 import { HiOutlineMenu, HiX, HiOutlineLogout } from 'react-icons/hi'
 
 const OptionMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
   const navigate = useNavigate()
+  const setIsLogin = useContext(IsLoginContext)
 
   const menuVariants = {
     initial: { opacity: 0, scale: 0.95, y: -10 },
@@ -33,6 +34,7 @@ const OptionMenu = () => {
     window.localStorage.removeItem('loggedBlogsappUser')
     navigate('/login')
     setMenuOpen(false)
+    setIsLogin(false)
   }
   return (
     <div className="absolute right-5" ref={menuRef}>

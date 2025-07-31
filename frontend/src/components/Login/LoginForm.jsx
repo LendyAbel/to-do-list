@@ -1,19 +1,28 @@
 import { useNavigate } from 'react-router'
 import { login } from '../../services/login'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { IsLoginContext } from '../../useContext/IsLoginContext'
 
 const LoginForm = ({ setRegister }) => {
-  const [user, setUser] = useState({ username: '', password: '' })
+  const [userInputData, setUserInputData] = useState({
+    username: '',
+    password: '',
+  })
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
+  const setIsLogin = useContext(IsLoginContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const credentials = { username: user.username, password: user.password }
+    const credentials = {
+      username: userInputData.username,
+      password: userInputData.password,
+    }
     const loginUser = await login(credentials)
     window.localStorage.setItem('loggedBlogsappUser', JSON.stringify(loginUser))
     navigate('/toDoList')
+    setIsLogin(true)
     console.log('Submit')
   }
 
@@ -35,7 +44,9 @@ const LoginForm = ({ setRegister }) => {
             <input
               name="username"
               type="text"
-              onChange={(e) => setUser({ ...user, username: e.target.value })}
+              onChange={(e) =>
+                setUserInputData({ ...userInputData, username: e.target.value })
+              }
               required
               className="w-full rounded-xl border-2 border-gray-200 bg-[#F0F4C3]/30 px-4 py-3 text-[#000000] placeholder-[#9e9e9e] transition-all duration-200 focus:border-[#AFB42B] focus:bg-white focus:ring-2 focus:ring-[#AFB42B]/20 focus:outline-none"
               placeholder="Enter your username"
@@ -54,7 +65,10 @@ const LoginForm = ({ setRegister }) => {
                 name="password"
                 type={showPassword ? 'text' : 'password'}
                 onChange={(e) => {
-                  setUser({ ...user, password: e.target.value })
+                  setUserInputData({
+                    ...userInputData,
+                    password: e.target.value,
+                  })
                 }}
                 required
                 className="w-full rounded-xl border-2 border-gray-200 bg-[#F0F4C3]/30 px-4 py-3 pr-12 text-[#000000] placeholder-[#9e9e9e] transition-all duration-200 focus:border-[#AFB42B] focus:bg-white focus:ring-2 focus:ring-[#AFB42B]/20 focus:outline-none"
@@ -77,7 +91,7 @@ const LoginForm = ({ setRegister }) => {
         <button
           type="submit"
           className="w-full transform rounded-xl bg-[#CDDC39] px-6 py-3 text-lg font-semibold text-[#000000] shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#a2af2e] hover:shadow-xl focus:ring-4 focus:ring-[#CDDC39]/30 focus:outline-none disabled:transform-none disabled:cursor-not-allowed disabled:opacity-50"
-          disabled={!user.username || !user.password}
+          disabled={!userInputData.username || !userInputData.password}
         >
           Sign In
         </button>

@@ -1,27 +1,9 @@
 {
   "list": [
     {
-      "title": "asdasdad",
-      "description": "adadadad",
-      "checked": true,
-      "id": "sPNFZ4"
-    },
-    {
-      "title": "Prueba",
-      "description": "Prueba",
-      "checked": true,
-      "id": "gqwC-I"
-    },
-    {
-      "title": "asdasd",
-      "description": "asdasda",
-      "checked": false,
-      "id": "siVWfo"
-    },
-    {
       "title": "asdasdasd",
       "description": "asdasdasd",
-      "checked": false,
+      "checked": true,
       "id": "tb3oqc"
     },
     {
@@ -29,6 +11,18 @@
       "description": "sdasdasdasd",
       "checked": false,
       "id": "nA4BUs"
+    },
+    {
+      "title": "Pelarme",
+      "description": "Ir a la peluqeria",
+      "checked": false,
+      "id": "nGTTdw"
+    },
+    {
+      "title": "yhgfghf",
+      "description": "ytfdjhgf",
+      "checked": false,
+      "id": "MfwXvt"
     }
   ],
   "users": [
@@ -43,6 +37,12 @@
       "name": "Lendy Abel",
       "passwordHash": "$2b$10$WDreTBEK6tdeXIeQ7StVOeIErORXBrqewJY5ypnEw5R8B/QL4.HiC",
       "id": "JkuHBE"
+    },
+    {
+      "username": "Andrea",
+      "name": "Andrea Mabel",
+      "passwordHash": "$2b$10$oSa9HUNoGFTPwkRERNwEmOOOUFde6u0de8BN7DXoMHav28Z/cERba",
+      "id": "1c-lgd"
     }
   ]
 }
