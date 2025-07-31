@@ -1,19 +1,19 @@
 import { useState } from 'react'
-import { List, AddForm, Filter, MainButton } from '../'
+import { List, AddForm, Filter, MainButton, OptionMenu } from '../'
 import { motion, AnimatePresence } from 'framer-motion'
-
-// Animation for transitioning between screens ( form <-> list )
-const screenVariants = {
-  initial: { opacity: 0, scale: 0.8 },
-  animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.8 },
-  transition: { duration: 0.3 },
-}
 
 const ToDoList = () => {
   const [formOpen, setFormOpen] = useState(false)
   const [isDeleteActive, setIsDeleteActive] = useState(false)
   const [activeFilter, setActiveFilter] = useState('all')
+
+  // Animation for transitioning between screens ( form <-> list )
+  const screenVariants = {
+    initial: { opacity: 0, scale: 0.8 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.8 },
+    transition: { duration: 0.3 },
+  }
 
   return (
     <div className="mx-auto w-full max-w-2xl p-4">
@@ -22,7 +22,14 @@ const ToDoList = () => {
           {formOpen ? (
             <AddForm handleClose={() => setFormOpen(false)} />
           ) : (
-            <motion.div key="list" {...screenVariants} className="p-4 sm:p-6">
+            <motion.div
+              key="list"
+              {...screenVariants}
+              className="relative p-4 sm:p-6"
+              >
+              {/* Burger Menu */}
+              <OptionMenu />
+              {/* Header */}
               <div className="mb-2">
                 <h2 className="text-2xl font-bold text-[#607D8B]">
                   Your Tasks
@@ -31,7 +38,6 @@ const ToDoList = () => {
                   Manage and organize your daily tasks
                 </p>
               </div>
-
               {/* Action Buttons */}
               <div className="mb-2 flex flex-wrap items-center justify-center gap-2 rounded-xl p-2">
                 <MainButton
