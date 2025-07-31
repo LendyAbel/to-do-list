@@ -20,7 +20,7 @@ const LoginForm = ({ setRegister }) => {
 
   return (
     <>
-      <div className="mb-8 text-center">
+      <div className="mb-3 text-center">
         <h2 className="mb-2 text-3xl font-bold text-[#607D8B]">Welcome Back</h2>
         <p className="text-sm text-[#9e9e9e]">Please sign in to your account</p>
       </div>
@@ -83,7 +83,7 @@ const LoginForm = ({ setRegister }) => {
           Sign In
         </button>
       </form>
-      <div className="mt-6 text-center">
+      <div className="mt-2 text-center">
         <p className="text-sm text-[#9e9e9e]">
           Don't have an account?
           <button

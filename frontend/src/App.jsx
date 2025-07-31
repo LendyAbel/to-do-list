@@ -1,24 +1,18 @@
-import { Heroe, ToDoList, Login } from './components'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router'
+
+import { ToDoList, Login } from './components'
+import HeroLayout from './Layout/HeroLayout'
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
-        <Route path="/login" element={<div className="flex flex-col items-center justify-center h-screen">
-              <Login />
-            </div>} />
-        <Route
-          path="/toDoList"
-          element={
-            <div className="flex flex-col items-center">
-              <Heroe />
-              <ToDoList />
-            </div>
-          }
-        />
-      </Routes>
+      <HeroLayout>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/toDoList" element={<ToDoList />} />
+        </Routes>
+      </HeroLayout>
     </BrowserRouter>
   )
 }

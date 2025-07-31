@@ -17,15 +17,15 @@ const RegisterForm = ({ setRegister }) => {
 
   return (
     <>
-      <div className="mb-8 text-center">
-        <h2 className="mb-2 text-3xl font-bold text-[#607D8B]">
+      <div className="mb-3 text-center">
+        <h2 className="mb-1 text-3xl font-bold text-[#607D8B]">
           Create Account
         </h2>
         <p className="text-sm text-[#9e9e9e]">Join us today and get started</p>
       </div>
 
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        <div className="space-y-4">
+      <form className="space-y-5" onSubmit={handleSubmit}>
+        <div className="space-y-3">
           <div className="space-y-2">
             <label
               htmlFor="username"
@@ -105,7 +105,7 @@ const RegisterForm = ({ setRegister }) => {
         </button>
       </form>
 
-      <div className="mt-6 text-center">
+      <div className="mt-2 text-center">
         <p className="text-sm text-[#9e9e9e]">
           Already have an account?
           <button
