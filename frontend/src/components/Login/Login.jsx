@@ -1,11 +1,27 @@
-import { useNavigate } from "react-router"
+import { useState } from 'react'
+import { LoginForm, RegisterForm } from '../'
 
 const Login = () => {
-    let navigate = useNavigate()
+  const [optionSelected, setOptionSelected] = useState('login')
 
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
-      <button onClick={()=>{navigate('/to-do-list')}} className=" w-20 h-20 bg-amber-400">Login</button>
+    <div className="bg-primary-bg flex max-h-[80vh] w-[96%] max-w-3xl flex-col items-center justify-center rounded-lg p-3 shadow-lg">
+      {optionSelected === 'login' && <LoginForm />}
+      {optionSelected === 'register' && <RegisterForm />}
+      <div className="flex items-center justify-center gap-3">
+        <button
+          className="cursor-pointer border p-1"
+          onClick={() => setOptionSelected('login')}
+        >
+          Login
+        </button>
+        <button
+          className="cursor-pointer border p-1"
+          onClick={() => setOptionSelected('register')}
+        >
+          Register
+        </button>
+      </div>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'framer-motion'
-import { DeleteButton } from '../../../components'
+import { DeleteButton } from '../../'
 import { updateById } from '../../../services/toDoList'
 
 const Element = ({ element, isDeleteActive }) => {

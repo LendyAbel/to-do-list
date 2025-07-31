@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { AddForm, Filter, MainButton, List } from '../../components'
+import { List, AddForm, Filter, MainButton } from '../'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // Animation for transitioning between screens ( form <-> list )
@@ -13,8 +13,8 @@ const screenVariants = {
 const ToDoList = () => {
   const [formOpen, setFormOpen] = useState(false)
   const [isDeleteActive, setIsDeleteActive] = useState(false)
-  const [activeFilter, setActiveFilter] = useState('all')
 
+  //Form functions
   const openForm = () => setFormOpen(true)
 
   const closeForm = () => setFormOpen(false)
@@ -55,7 +55,7 @@ const ToDoList = () => {
               />
             </div>
             <Filter showToDo={showToDo} showDone={showDone} showAll={showAll} />
-            <List isDeleteActive={isDeleteActive} activeFilter={activeFilter} />
+            <List activeFilter={activeFilter} isDeleteActive={isDeleteActive} />
           </motion.div>
         )}
       </AnimatePresence>

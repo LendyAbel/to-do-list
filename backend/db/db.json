@@ -1,0 +1,30 @@
+{
+  "list": [
+    {
+      "title": "Prueba",
+      "description": "Esto es una prueba del servidor",
+      "checked": false,
+      "id": "mIMjfu"
+    },
+    {
+      "title": "Hello",
+      "description": "asdasd",
+      "checked": false,
+      "id": "_9W6UX"
+    }
+  ],
+  "users": [
+    {
+      "username": "Lendy",
+      "name": "Lendy Sanchez",
+      "passwordHash": "$2b$10$Le6z1AJO.6m16aHL1OmTHefIgaIvY50yacov/46m/9r6uHJlBTMve",
+      "id": "AtjlbH"
+    },
+    {
+      "username": "a",
+      "name": "a",
+      "passwordHash": "$2b$10$61EuQH0d88u47kJa2mLkaewAKTMBgvrL1Pku7N5XrELlIoj36HlHO",
+      "id": "VAMLDo"
+    }
+  ]
+}
