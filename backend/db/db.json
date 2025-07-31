@@ -37,6 +37,12 @@
       "name": "Lendy Sanchez",
       "passwordHash": "$2b$10$Le6z1AJO.6m16aHL1OmTHefIgaIvY50yacov/46m/9r6uHJlBTMve",
       "id": "AtjlbH"
+    },
+    {
+      "username": "Lendy",
+      "name": "Lendy Abel",
+      "passwordHash": "$2b$10$WDreTBEK6tdeXIeQ7StVOeIErORXBrqewJY5ypnEw5R8B/QL4.HiC",
+      "id": "JkuHBE"
     }
   ]
 }
