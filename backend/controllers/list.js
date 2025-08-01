@@ -25,51 +25,44 @@ listRouter.get('/', async (req, res) => {
       })
   }
 
-  const { list } = db.data
+  const userId = req.user.id
+  const userList = db.data.list.filter(item => item.user === userId)
 
-  return res
-    .status(200)
-    .json(list)
-    .end(() => {
-      logger.info('List sent successfully')
-    })
+  logger.info('List sent successfully for user:', userId)
+  return res.status(200).json(userList)
 })
 
-listRouter.get('/:id', async (req, res) => {
-  const id = req.params.id
-  logger.info('Recived request to get element with id:', id)
+// listRouter.get('/:id', async (req, res) => {
+//   const id = req.params.id
+//   logger.info('Recived request to get element with id:', id)
 
-  const db = await listDB
-  await db.read()
+//   const db = await listDB
+//   await db.read()
 
-  if (!db.data.list) {
-    return res
-      .status(500)
-      .json({ error: 'List not found' })
-      .end(() => {
-        logger.error('List not found')
-      })
-  }
+//   if (!db.data.list) {
+//     return res
+//       .status(500)
+//       .json({ error: 'List not found' })
+//       .end(() => {
+//         logger.error('List not found')
+//       })
+//   }
 
-  const { list } = db.data
-  const element = list.find(element => element.id === id)
+//   const { list } = db.data
+//   const element = list.find(element => element.id === id)
 
-  if (!element) {
-    return res
-      .status(404)
-      .json({ error: 'Element not found' })
-      .end(() => {
-        logger.error('Element not found')
-      })
-  }
+//   if (!element) {
+//     return res
+//       .status(404)
+//       .json({ error: 'Element not found' })
+//       .end(() => {
+//         logger.error('Element not found')
+//       })
+//   }
 
-  return res
-    .status(200)
-    .json(element)
-    .end(() => {
-      logger.info('Element sent successfully')
-    })
-})
+//   logger.info('Element sent successfully')
+//   return res.status(200).json(element)
+// })
 
 listRouter.post('/', async (req, res) => {
   logger.info('Recived request to add item:', req.body)
@@ -90,13 +83,10 @@ listRouter.post('/', async (req, res) => {
   await db.read()
 
   //Decoding token to find user id
-  const decodedToken = jwt.verify(getTokenFrom(req), 'secret')
-  if (!decodedToken.id) {
-    return res.status(401).json({ error: 'token invalid' })
-  }
-  
+  const userId = req.user.id
+
   //Finding user from database
-  const user = db.data.users.find(user => user.id === decodedToken.id)
+  const user = db.data.users.find(user => user.id === userId)
   if (!user) {
     return response.status(400).json({ error: 'userId missing or not valid' })
   }
@@ -106,19 +96,14 @@ listRouter.post('/', async (req, res) => {
     description,
     checked: false,
     id: generateId(),
-    user: user.id
+    user: user.id,
   }
-
 
   db.data.list.push(newElement)
   await db.write()
 
-  return res
-    .status(201)
-    .json(newElement)
-    .end(() => {
-      logger.info('Item added successfully:', newElement)
-    })
+  logger.info('Item added successfully:', newElement)
+  return res.status(201).json(newElement)
 })
 
 listRouter.put('/:id', async (req, res) => {

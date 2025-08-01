@@ -9,10 +9,17 @@
     },
     {
       "title": "Mate",
-      "description": "Prepara mate",
+      "description": "Comprar mate",
       "checked": false,
-      "id": "xsZZy0",
+      "id": "pVVkhX",
       "user": "_EIspK"
+    },
+    {
+      "title": "Correr",
+      "description": "Correr 1000km",
+      "checked": false,
+      "id": "ZdDjRj",
+      "user": "zRjWRe"
     }
   ],
   "users": [
