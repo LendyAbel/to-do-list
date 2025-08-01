@@ -14,7 +14,8 @@ const itemVariants = {
 const List = ({ activeFilter, isDeleteActive, className }) => {
   const result = useQuery({
     queryKey: ['posts'],
-    queryFn: getAll,
+    queryFn: () =>
+      getAll(JSON.parse(localStorage.getItem('loggedBlogsappUser'))),
     retry: false,
   })
 

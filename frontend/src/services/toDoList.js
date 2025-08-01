@@ -8,14 +8,16 @@ export const setToken = (newToken) => {
   token = `Bearer ${newToken}`
 }
 
-export const getAll = async () => {
+export const getAll = async (user) => {
   const response = await axios.get(baseUrl)
-  return response.data
+  const list = response.data.filter((task) => task.user === user.id)
+  return list
 }
 
 export const createNew = async (newObject) => {
+  console.log('SERVICE POST token:', token)
   const config = {
-    headers:{ Authorization: token}
+    headers: { Authorization: token },
   }
   const response = await axios.post(baseUrl, newObject, config)
   return response.data
