@@ -25,8 +25,8 @@ userRouter.get('/', async (req, res) => {
       })
   }
   console.log('db.data.users------', db.data.users)
-  
-  const usersToShow = db.data.users.map(({passwordHash,...resto})=> resto) //Deleting hashpassword for security
+
+  const usersToShow = db.data.users.map(({ passwordHash, ...resto }) => resto) //Deleting hashpassword for security
 
   return res
     .status(200)
@@ -66,7 +66,7 @@ userRouter.post('/', async (req, res) => {
   db.data.users.push(newUser)
   await db.write()
 
-  return res
+  res
     .status(201)
     .json(newUser)
     .end(() => {

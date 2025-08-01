@@ -1,10 +1,11 @@
 const listRouter = require('express').Router()
 const { JSONFilePreset } = require('lowdb/node')
+const jwt = require('jsonwebtoken')
 const path = require('path')
 
 const logger = require('../utils/logger')
 
-const { generateId } = require('../utils/list_helper')
+const { generateId, getTokenFrom } = require('../utils/list_helper')
 
 const dbPath = path.join(__dirname, '../db/db.json')
 const listDB = JSONFilePreset(dbPath, { list: [], users: [] })
@@ -73,8 +74,8 @@ listRouter.get('/:id', async (req, res) => {
 listRouter.post('/', async (req, res) => {
   logger.info('Recived request to add item:', req.body)
 
+  //Getting title and description from request
   const { title, description } = req.body
-
   if (!title || !description) {
     return res
       .status(400)
@@ -84,15 +85,30 @@ listRouter.post('/', async (req, res) => {
       })
   }
 
+  //Reading database
+  const db = await listDB
+  await db.read()
+
+  //Decoding token to find user id
+  const decodedToken = jwt.verify(getTokenFrom(req), 'secret')
+  if (!decodedToken.id) {
+    return res.status(401).json({ error: 'token invalid' })
+  }
+  
+  //Finding user from database
+  const user = db.data.users.find(user => user.id === decodedToken.id)
+  if (!user) {
+    return response.status(400).json({ error: 'userId missing or not valid' })
+  }
+
   const newElement = {
     title,
     description,
     checked: false,
     id: generateId(),
+    user: user.id
   }
 
-  const db = await listDB
-  await db.read()
 
   db.data.list.push(newElement)
   await db.write()
@@ -130,7 +146,7 @@ listRouter.delete('/:id', async (req, res) => {
 
   const db = await listDB
   await db.read()
-  
+
   db.data.list = db.data.list.filter(element => element.id !== id)
   await db.write()
 

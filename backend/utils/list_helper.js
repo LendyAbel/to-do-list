@@ -4,4 +4,12 @@ const generateId = () => {
   return nanoid(6)
 }
 
-module.exports = { generateId }
+const getTokenFrom = (request) => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.startsWith('Bearer ')) {
+    return authorization.replace('Bearer ', '')
+  }
+  return null
+}
+
+module.exports = { generateId, getTokenFrom }

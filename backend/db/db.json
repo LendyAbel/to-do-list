@@ -1,60 +1,32 @@
 {
   "list": [
     {
-      "title": "asdasdasd",
-      "description": "asdasdasd",
-      "checked": true,
-      "id": "tb3oqc"
+      "title": "Compras",
+      "description": "-Pan\n-Arroz\n-Huevos\n-Carnes\n-Patatas\n-etc...",
+      "checked": false,
+      "id": "QQjrxR",
+      "user": "zRjWRe"
     },
     {
-      "title": "sadasdaa",
-      "description": "sdasdasdasd",
+      "title": "Mate",
+      "description": "Prepara mate",
       "checked": false,
-      "id": "nA4BUs"
-    },
-    {
-      "title": "Pelarme",
-      "description": "Ir a la peluqeria",
-      "checked": false,
-      "id": "nGTTdw"
-    },
-    {
-      "title": "yhgfghf",
-      "description": "ytfdjhgf",
-      "checked": false,
-      "id": "MfwXvt"
-    },
-    {
-      "title": "Token",
-      "description": "Token",
-      "checked": false,
-      "id": "0EgjD6"
-    },
-    {
-      "title": "Token Token",
-      "description": "Token TOken",
-      "checked": false,
-      "id": "rO5aT3"
+      "id": "xsZZy0",
+      "user": "_EIspK"
     }
   ],
   "users": [
     {
       "username": "Lendy",
-      "name": "Lendy Sanchez",
-      "passwordHash": "$2b$10$Le6z1AJO.6m16aHL1OmTHefIgaIvY50yacov/46m/9r6uHJlBTMve",
-      "id": "AtjlbH"
-    },
-    {
-      "username": "Lendy",
-      "name": "Lendy Abel",
-      "passwordHash": "$2b$10$WDreTBEK6tdeXIeQ7StVOeIErORXBrqewJY5ypnEw5R8B/QL4.HiC",
-      "id": "JkuHBE"
+      "name": "Lendy Abel Sánchez Vázquez",
+      "passwordHash": "$2b$10$BmQkesPHhXhWX6RyItAqSOOMsnBBPGYhy/cGW3BSNqv/cPFybzNoC",
+      "id": "zRjWRe"
     },
     {
       "username": "Andrea",
-      "name": "Andrea Mabel",
-      "passwordHash": "$2b$10$oSa9HUNoGFTPwkRERNwEmOOOUFde6u0de8BN7DXoMHav28Z/cERba",
-      "id": "1c-lgd"
+      "name": "Andrea Mabel Gutierrez",
+      "passwordHash": "$2b$10$Sqdkvxk45cfLD8Jo3IDs5usqFnjog8lmPH1rgKTXJwpuNcJzXo5/e",
+      "id": "_EIspK"
     }
   ]
 }
