@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { UserContext } from '../useContext/userContext'
+import { setToken } from '../services/toDoList'
 
 const HeroLayout = ({ children }) => {
   const [user, setUser] = useState(null)
@@ -8,6 +9,7 @@ const HeroLayout = ({ children }) => {
     const userLogged = JSON.parse(localStorage.getItem('loggedBlogsappUser'))
     console.log(userLogged)
     setUser(userLogged)
+    setToken(userLogged?.token)
   }, [])
 
   return (

@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router'
 import { login } from '../../services/login'
 import { useContext, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-import { UserContext } from '../../useContext/UserContext'
+import { UserContext } from '../../useContext/userContext'
+import { setToken } from '../../services/toDoList'
 
 const LoginForm = ({ setRegister }) => {
   const [userInputData, setUserInputData] = useState({
@@ -23,6 +24,7 @@ const LoginForm = ({ setRegister }) => {
     window.localStorage.setItem('loggedBlogsappUser', JSON.stringify(loginUser))
     navigate('/toDoList')
     setUser(loginUser)
+    setToken(loginUser.token)
     console.log('Submit')
   }
 

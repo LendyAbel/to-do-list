@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { motion, AnimatePresence } from 'framer-motion'
 import { UserContext } from '../../useContext/userContext'
 import { HiOutlineMenu, HiX, HiOutlineLogout } from 'react-icons/hi'
+import { setToken } from '../../services/toDoList'
 
 const OptionMenu = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -35,6 +36,7 @@ const OptionMenu = () => {
     navigate('/login')
     setMenuOpen(false)
     setUser(null)
+    setToken(null)
   }
   return (
     <div className="absolute right-5" ref={menuRef}>
