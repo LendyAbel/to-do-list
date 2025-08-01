@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router'
 import { login } from '../../services/login'
 import { useContext, useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-import { IsLoginContext } from '../../useContext/IsLoginContext'
+import { UserContext } from '../../useContext/UserContext'
 
 const LoginForm = ({ setRegister }) => {
   const [userInputData, setUserInputData] = useState({
@@ -11,7 +11,7 @@ const LoginForm = ({ setRegister }) => {
   })
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
-  const setIsLogin = useContext(IsLoginContext)
+  const { setUser } = useContext(UserContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -22,7 +22,7 @@ const LoginForm = ({ setRegister }) => {
     const loginUser = await login(credentials)
     window.localStorage.setItem('loggedBlogsappUser', JSON.stringify(loginUser))
     navigate('/toDoList')
-    setIsLogin(true)
+    setUser(loginUser)
     console.log('Submit')
   }
 

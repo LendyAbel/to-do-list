@@ -1,10 +1,14 @@
-import { useState } from 'react'
-import { IsLoginContext } from '../useContext/IsLoginContext'
-
+import { useEffect, useState } from 'react'
+import { UserContext } from '../useContext/userContext'
 
 const HeroLayout = ({ children }) => {
-  const [isLogin, setIsLoging] = useState(false)
-  const user = JSON.parse(localStorage.getItem('loggedBlogsappUser'))
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    const userLogged = JSON.parse(localStorage.getItem('loggedBlogsappUser'))
+    console.log(userLogged)
+    setUser(userLogged)
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#AFB42B] via-[#AFB42B] to-[#607D8B]">
@@ -17,7 +21,7 @@ const HeroLayout = ({ children }) => {
               <span className="block">TO DO</span>
               <span className="block text-[#F0F4C3] drop-shadow-lg">LIST</span>
             </h1>
-            {!isLogin ? (
+            {!user ? (
               <p className="sm:text-md mx-auto max-w-2xl text-base leading-relaxed font-medium text-white/90">
                 A simple and intuitive To Do List app that helps you organize
                 tasks, set priorities, and track your progress efficiently.
@@ -34,9 +38,9 @@ const HeroLayout = ({ children }) => {
 
       {/* Content Section */}
       <div>
-        <IsLoginContext.Provider value={setIsLoging}>
+        <UserContext.Provider value={{user, setUser}}>
           {children}
-        </IsLoginContext.Provider>
+        </UserContext.Provider>
       </div>
     </div>
   )
