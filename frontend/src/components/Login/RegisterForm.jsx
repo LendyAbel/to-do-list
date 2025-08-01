@@ -1,18 +1,48 @@
 import { useNavigate } from 'react-router'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { creatNewUser } from '../../services/users'
+import { UserContext } from '../../useContext/userContext'
+import { setToken } from '../../services/toDoList'
+import { login } from '../../services/login'
 
 const RegisterForm = ({ setRegister }) => {
   const [newUser, setNewUser] = useState({})
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
+  const { setUser } = useContext(UserContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    //Creating user in database
     const userCreated = await creatNewUser(newUser)
+    console.log('user created')
+
+    //Login with the created user
+    console.log('Login')
+    const { username, password } = newUser
+    //Retry cause maybe user creation get late
+    let retries = 5
+    let loginUser = null
+    while (retries > 0) {
+      try {
+        loginUser = await login({ username, password })
+        break // success, break bucle
+      } catch (e) {
+        retries--
+        setTimeout(500) // wait half second
+      }
+    }
+
+    //Set user and token
+    window.localStorage.setItem('loggedBlogsappUser', JSON.stringify(loginUser))
+    setUser(loginUser)
+    setToken(loginUser.token)
+
     navigate('/toDoList')
     console.log('New user created:', userCreated)
+    console.log('Login')
   }
 
   return (

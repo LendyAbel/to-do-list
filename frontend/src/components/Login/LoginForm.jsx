@@ -16,16 +16,21 @@ const LoginForm = ({ setRegister }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    //Login with credentials
     const credentials = {
       username: userInputData.username,
       password: userInputData.password,
     }
     const loginUser = await login(credentials)
+
+    //Set user and token
     window.localStorage.setItem('loggedBlogsappUser', JSON.stringify(loginUser))
-    navigate('/toDoList')
     setUser(loginUser)
     setToken(loginUser.token)
-    console.log('Submit')
+
+    navigate('/toDoList')
+    console.log('Login')
   }
 
   return (

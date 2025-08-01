@@ -7,7 +7,6 @@ const HeroLayout = ({ children }) => {
 
   useEffect(() => {
     const userLogged = JSON.parse(localStorage.getItem('loggedBlogsappUser'))
-    console.log(userLogged)
     setUser(userLogged)
     setToken(userLogged?.token)
   }, [])
