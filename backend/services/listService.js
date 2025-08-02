@@ -11,7 +11,6 @@ const getListByUser = async userId => {
 }
 
 const writeElement = async element => {
-  //Reading database
   const db = await getDB()
   db.data.list.push(element)
   await db.write()
