@@ -1,4 +1,6 @@
 const listRouter = require('express').Router()
+const listService = require('../services/listService')
+const userService = require('../services/userService')
 const { JSONFilePreset } = require('lowdb/node')
 const jwt = require('jsonwebtoken')
 const path = require('path')
@@ -13,22 +15,11 @@ const listDB = JSONFilePreset(dbPath, { list: [], users: [] })
 listRouter.get('/', async (req, res) => {
   logger.info('Recived request to get list')
 
-  const db = await listDB
-  await db.read()
-
-  if (!db.data.list) {
-    return res
-      .status(500)
-      .json({ error: 'List not found' })
-      .end(() => {
-        logger.error('List not found')
-      })
-  }
-
   const userId = req.user.id
-  const userList = db.data.list.filter(item => item.user === userId)
 
-  logger.info('List sent successfully for user:', userId)
+  const userList = await listService.getListByUser(userId)
+
+  logger.info('List sent successfully for user:', userList)
   return res.status(200).json(userList)
 })
 
@@ -36,29 +27,10 @@ listRouter.get('/', async (req, res) => {
 //   const id = req.params.id
 //   logger.info('Recived request to get element with id:', id)
 
-//   const db = await listDB
-//   await db.read()
-
-//   if (!db.data.list) {
-//     return res
-//       .status(500)
-//       .json({ error: 'List not found' })
-//       .end(() => {
-//         logger.error('List not found')
-//       })
-//   }
-
-//   const { list } = db.data
-//   const element = list.find(element => element.id === id)
-
-//   if (!element) {
-//     return res
-//       .status(404)
-//       .json({ error: 'Element not found' })
-//       .end(() => {
-//         logger.error('Element not found')
-//       })
-//   }
+// Put code here
+// -------------
+//
+//--------------
 
 //   logger.info('Element sent successfully')
 //   return res.status(200).json(element)
@@ -78,18 +50,8 @@ listRouter.post('/', async (req, res) => {
       })
   }
 
-  //Reading database
-  const db = await listDB
-  await db.read()
-
-  //Decoding token to find user id
   const userId = req.user.id
-
-  //Finding user from database
-  const user = db.data.users.find(user => user.id === userId)
-  if (!user) {
-    return response.status(400).json({ error: 'userId missing or not valid' })
-  }
+  const user = await userService.findUserById(userId)
 
   const newElement = {
     title,
@@ -99,45 +61,31 @@ listRouter.post('/', async (req, res) => {
     user: user.id,
   }
 
-  db.data.list.push(newElement)
-  await db.write()
+  const elementAdded = await listService.writeElement(newElement)
 
-  logger.info('Item added successfully:', newElement)
-  return res.status(201).json(newElement)
+  logger.info('Item added successfully:', elementAdded)
+  return res.status(201).json(elementAdded)
 })
 
 listRouter.put('/:id', async (req, res) => {
   const id = req.params.id
-  const updatedElement = req.body
   logger.info('Recived request to update item with id:', id)
+  const elementToUpdate = req.body
 
-  const db = await listDB
-  await db.read()
+  const updatedElement = await listService.updateElementById(id, elementToUpdate)
 
-  db.data.list = db.data.list.map(element => (element.id === id ? updatedElement : element))
-  await db.write()
-
-  res
-    .status(200)
-    .json(updatedElement)
-    .end(() => {
-      logger.info('Item updated successfully:', updatedElement)
-    })
+  logger.info('Item updated successfully:', updatedElement)
+  res.status(200).json(updatedElement)
 })
 
 listRouter.delete('/:id', async (req, res) => {
   const id = req.params.id
   logger.info('Recived request to delete item with id:', id)
 
-  const db = await listDB
-  await db.read()
+  const deletedElement = await listService.deleteElementById(id)
 
-  db.data.list = db.data.list.filter(element => element.id !== id)
-  await db.write()
-
-  res.status(204).end(() => {
-    logger.info(`Item with id ${id} deleted successfully`)
-  })
+  logger.info(`Item deleted successfully: `, deletedElement)
+  res.status(204).send(deletedElement)
 })
 
 module.exports = listRouter
