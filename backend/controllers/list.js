@@ -1,3 +1,5 @@
+// *** AUTHENTIFICATION DOING ON MIDDLEWARE
+
 const listRouter = require('express').Router()
 const listService = require('../services/listService')
 const userService = require('../services/userService')

@@ -17,15 +17,15 @@
     {
       "title": "Correr",
       "description": "Correr 1000km",
-      "checked": false,
+      "checked": true,
       "id": "ZdDjRj",
       "user": "zRjWRe"
     },
     {
-      "title": "Otra prueba",
-      "description": "Hola",
+      "title": "Correr",
+      "description": "Correr 1000km",
       "checked": false,
-      "id": "qzqeyn",
+      "id": "7Fj8Zo",
       "user": "zRjWRe"
     }
   ],

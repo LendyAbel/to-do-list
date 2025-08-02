@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { UserContext } from '../useContext/userContext'
+import { UserContext } from '../useContext/UserContext'
 import { setToken } from '../services/toDoList'
 
 const HeroLayout = ({ children }) => {
