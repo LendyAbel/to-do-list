@@ -2,14 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { createNew } from '../../services/toDoList'
 import { motion } from 'framer-motion'
+import { FaExclamationTriangle } from 'react-icons/fa'
 
 // Animation for transitioning between screens ( form <-> list )
-const screenVariants = {
-  initial: { opacity: 0, scale: 0.8 },
-  animate: { opacity: 1, scale: 1 },
-  exit: { opacity: 0, scale: 0.8 },
-  transition: { duration: 0.3 },
-}
 
 const AddForm = ({ handleClose }) => {
   const queryClient = useQueryClient()
@@ -17,19 +12,46 @@ const AddForm = ({ handleClose }) => {
     title: '',
     description: '',
   })
+  const [error, setError] = useState('')
+
+  const screenVariants = {
+    initial: { opacity: 0, scale: 0.8 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.8 },
+    transition: { duration: 0.3 },
+  }
 
   const createMutation = useMutation({
     mutationFn: createNew,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] })
+      handleClose()
+    },
+    onError: (err) => {
+      // Handle different types of errors
+      if (err.response?.status === 400) {
+        setError('Invalid task data. Please check your information.')
+      } else if (err.response?.status === 401) {
+        setError('You are not authorized. Please log in again.')
+      } else if (err.response?.status === 500) {
+        setError('Server error. Please try again later.')
+      } else if (err.message === 'Network Error') {
+        setError('Network error. Please check your connection.')
+      } else {
+        setError(
+          err.response?.data?.error ||
+            err.message ||
+            'Failed to create task. Please try again.',
+        )
+      }
     },
   })
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setError('')
     const newElement = { ...formData, checked: false }
     createMutation.mutate(newElement)
-    handleClose()
   }
 
   const handleCancel = () => {
@@ -37,6 +59,7 @@ const AddForm = ({ handleClose }) => {
       title: '',
       description: '',
     })
+    setError('')
     handleClose()
   }
 
@@ -48,6 +71,18 @@ const AddForm = ({ handleClose }) => {
           Create a new task to add to your list
         </p>
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className="mb-4 flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 p-4">
+          <FaExclamationTriangle
+            className="flex-shrink-0 text-red-500"
+            size={20}
+          />
+          <p className="text-sm font-medium text-red-700">{error}</p>
+        </div>
+      )}
+
       <form id="add-form" className="space-y-2" onSubmit={handleSubmit}>
         <div className="space-y-2">
           <div className="space-y-1">
