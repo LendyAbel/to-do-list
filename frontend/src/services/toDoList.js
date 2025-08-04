@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3001/list'
+const baseUrl = `${import.meta.env.VITE_API_URL}/list`
 
 let token = null
 let config = {}
