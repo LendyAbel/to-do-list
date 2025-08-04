@@ -52,10 +52,10 @@ userRouter.post('/', async (req, res) => {
 userRouter.put('/:id', async (req, res) => {
   logger.info('Recived request to update item with id:', id)
   const id = req.params.id
-  const { username, password, name } = req.body
+  const { username, newPassword, name } = req.body
 
   const saltRounds = 10
-  const passwordHash = await bcrypt.hash(password, saltRounds)
+  const passwordHash = await bcrypt.hash(newPassword, saltRounds)
 
   const userToUpdate = { username, name, passwordHash, id }
 
