@@ -1,4 +1,4 @@
-const Header = ({ title, description }) => {
+const Header = ({ title='', description='' }) => {
   return (
     <div className="mb-2">
       <h2 className="text-2xl font-bold text-[#607D8B]">{title}</h2>

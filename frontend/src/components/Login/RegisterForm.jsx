@@ -5,11 +5,15 @@ import { creatNewUser } from '../../services/users'
 import { UserContext } from '../../useContext/UserContext'
 import { setToken } from '../../services/toDoList'
 import { login } from '../../services/login'
+import ErrorMenssage from '../../ui/utils/ErrorMenssage'
+import TextInput from '../../ui/Elements/TextInput'
+import PasswordInput from '../../ui/Elements/PasswordInput'
+import AcceptButton from '../../ui/Elements/AcceptButton'
 
 const RegisterForm = ({ setRegister }) => {
   const [newUser, setNewUser] = useState({})
   const [showPassword, setShowPassword] = useState(false)
-  const[error, setError] = useState('')
+  const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
@@ -82,101 +86,51 @@ const RegisterForm = ({ setRegister }) => {
       </div>
 
       {/* Error Message */}
-      {error && (
-        <div className="mb-4 flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 p-4">
-          <FaExclamationTriangle
-            className="flex-shrink-0 text-red-500"
-            size={20}
-          />
-          <p className="text-sm font-medium text-red-700">{error}</p>
-        </div>
-      )}
+      {error && <ErrorMenssage error={error} />}
 
       <form className="space-y-5" onSubmit={handleSubmit}>
         <div className="space-y-3">
-          <div className="space-y-2">
-            <label
-              htmlFor="username"
-              className="mb-1 block text-sm font-medium text-[#607D8B]"
-            >
-              Username
-            </label>
-            <input
-              name="username"
-              type="text"
-              onChange={(e) => {
-                setNewUser({ ...newUser, username: e.target.value })
-              }}
-              required
-              disabled={isLoading}
-              className="w-full rounded-xl border-2 border-gray-200 bg-[#F0F4C3]/30 px-4 py-3 text-[#000000] placeholder-[#9e9e9e] transition-all duration-200 focus:border-[#AFB42B] focus:bg-white focus:ring-2 focus:ring-[#AFB42B]/20 focus:outline-none"
-              placeholder="Choose a username"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label
-              htmlFor="name"
-              className="mb-1 block text-sm font-medium text-[#607D8B]"
-            >
-              Full Name
-            </label>
-            <input
-              name="name"
-              type="text"
-              onChange={(e) => {
-                setNewUser({ ...newUser, name: e.target.value })
-              }}
-              required
-              disabled={isLoading}
-              className="w-full rounded-xl border-2 border-gray-200 bg-[#F0F4C3]/30 px-4 py-3 text-[#000000] placeholder-[#9e9e9e] transition-all duration-200 focus:border-[#AFB42B] focus:bg-white focus:ring-2 focus:ring-[#AFB42B]/20 focus:outline-none"
-              placeholder="Enter your full name"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label
-              htmlFor="password"
-              className="mb-1 block text-sm font-medium text-[#607D8B]"
-            >
-              Password
-            </label>
-            <div className="relative">
-              <input
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                onChange={(e) => {
-                  setNewUser({ ...newUser, password: e.target.value })
-                }}
-                required
-                disabled={isLoading}
-                className="w-full rounded-xl border-2 border-gray-200 bg-[#F0F4C3]/30 px-4 py-3 pr-12 text-[#000000] placeholder-[#9e9e9e] transition-all duration-200 focus:border-[#AFB42B] focus:bg-white focus:ring-2 focus:ring-[#AFB42B]/20 focus:outline-none"
-                placeholder="Create a secure password"
-              />
-              <button
-                type="button"
-                className="absolute top-1/2 right-3 -translate-y-1/2 p-2 text-[#9e9e9e] transition-colors duration-200 hover:text-[#607D8B] focus:text-[#607D8B] focus:outline-none"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setShowPassword(!showPassword)
-                }}
-                disabled={isLoading}
-              >
-                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
-              </button>
-            </div>
-          </div>
+          <TextInput
+            name="username"
+            label="Username"
+            data={newUser}
+            setData={setNewUser}
+            value="username"
+            clearError={() => {
+              setError('')
+            }}
+          />
+          <TextInput
+            name="name"
+            label="Full Name"
+            data={newUser}
+            setData={setNewUser}
+            value="name"
+            clearError={() => {
+              setError('')
+            }}
+          />
+          <PasswordInput
+            name="password"
+            label="Password"
+            data={newUser}
+            setData={setNewUser}
+            value="password"
+            clearError={() => {
+              setError('')
+            }}
+          />
         </div>
-
-        <button
+        <AcceptButton
+          label="Creat Account"
+          loadingLabel="Creating Account..."
           type="submit"
-          className="w-full transform rounded-xl bg-[#CDDC39] px-6 py-3 text-lg font-semibold text-[#000000] shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#a2af2e] hover:shadow-xl focus:ring-4 focus:ring-[#CDDC39]/30 focus:outline-none disabled:transform-none disabled:cursor-not-allowed disabled:opacity-50"
-          disabled={
+          disable={
             !newUser.username || !newUser.name || !newUser.password || isLoading
           }
-        >
-          {isLoading ? 'Creating Account...' : 'Create Account'}
-        </button>
+          isPending={isLoading}
+          className="w-full"
+        />
       </form>
 
       <div className="mt-2 text-center">

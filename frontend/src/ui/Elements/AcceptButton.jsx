@@ -1,6 +1,6 @@
 const AcceptButton = ({
-  label,
-  loadingLabel,
+  label='',
+  loadingLabel='',
   type = 'button',
   disable = false,
   isPending = false,

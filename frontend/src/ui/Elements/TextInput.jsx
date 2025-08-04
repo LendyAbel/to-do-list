@@ -1,9 +1,9 @@
 const TextInput = ({
   name = '',
   label = '',
-  data,
-  setData,
-  value,
+  data={},
+  setData=()=>{},
+  value='',
   clearError = () => {},
 }) => {
   return (
@@ -24,7 +24,7 @@ const TextInput = ({
           clearError()
         }}
         className="w-full rounded-xl border-2 border-gray-200 bg-[#F0F4C3]/30 px-4 py-3 text-[#000000] placeholder-[#9e9e9e] transition-all duration-200 focus:border-[#AFB42B] focus:bg-white focus:ring-2 focus:ring-[#AFB42B]/20 focus:outline-none"
-        placeholder="Enter task title"
+        placeholder={`Enter your ${label.toLowerCase()}`}
         required
       />
     </div>
