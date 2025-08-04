@@ -35,12 +35,14 @@ const AddFormUI = ({
           <TextInput
             name={'title'}
             label={'Task Title'}
+            value={'title'}
             data={formData}
             setData={setFormData}
           />
           <TextArea
             name={'description'}
             label={'Description'}
+            value={'description'}
             data={formData}
             setData={setFormData}
           />
