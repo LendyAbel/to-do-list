@@ -1,13 +1,6 @@
 {
   "list": [
     {
-      "title": "Compras",
-      "description": "-Pan\n-Arroz\n-Huevos\n-Carnes\n-Patatas\n-etc...",
-      "checked": false,
-      "id": "QQjrxR",
-      "user": "zRjWRe"
-    },
-    {
       "title": "Mate",
       "description": "Comprar mate",
       "checked": false,
@@ -27,13 +20,20 @@
       "checked": false,
       "id": "7Fj8Zo",
       "user": "zRjWRe"
+    },
+    {
+      "title": "Hola",
+      "description": "Hola",
+      "checked": false,
+      "id": "stV5PS",
+      "user": "zRjWRe"
     }
   ],
   "users": [
     {
       "username": "Lendy",
       "name": "Lendy Abel Sánchez Vázquez",
-      "passwordHash": "$2b$10$BmQkesPHhXhWX6RyItAqSOOMsnBBPGYhy/cGW3BSNqv/cPFybzNoC",
+      "passwordHash": "$2b$10$spVAEPlK1aQOcsRQwpX9zOdfuWiz0g8ZKa3UGUDSluABsMLN9kq9K",
       "id": "zRjWRe"
     },
     {

@@ -43,7 +43,6 @@ const ChangePasswordForm = ({ handleClose }) => {
         return
       }
       const user = JSON.parse(window.localStorage.getItem('loggedBlogsappUser'))
-      console.log('USER', user)
       const userToUpdate = { ...user, newPassword: formData.newPassword }
       const updatedUser = await changePassword(userToUpdate)
 

@@ -16,6 +16,8 @@ export const creatNewUser = async (newUser) => {
 }
 
 export const changePassword = async (userToUpdate) => {
+  console.log('USER TO UPDATE (SERVICE)', userToUpdate.id)
+
   const response = await axios.put(
     `${baseUrl}/${userToUpdate.id}`,
     userToUpdate,
@@ -23,3 +25,6 @@ export const changePassword = async (userToUpdate) => {
   )
   return response.data
 }
+
+const usersService = { setToken }
+export default usersService

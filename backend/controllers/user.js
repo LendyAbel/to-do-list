@@ -50,8 +50,8 @@ userRouter.post('/', async (req, res) => {
 })
 
 userRouter.put('/:id', async (req, res) => {
-  logger.info('Recived request to update item with id:', id)
   const id = req.params.id
+  logger.info('Recived request to update item with id:', id)
   const { username, newPassword, name } = req.body
 
   const saltRounds = 10

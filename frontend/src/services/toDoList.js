@@ -36,3 +36,7 @@ export const updateById = async (updatedObject) => {
   )
   return response.data
 }
+
+const toDoListService = {setToken}
+
+export default toDoListService
