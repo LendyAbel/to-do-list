@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 import { useState, useContext } from 'react'
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { FaEye, FaEyeSlash, FaExclamationTriangle } from 'react-icons/fa'
 import { creatNewUser } from '../../services/users'
 import { UserContext } from '../../useContext/UserContext'
 import { setToken } from '../../services/toDoList'
@@ -9,40 +9,67 @@ import { login } from '../../services/login'
 const RegisterForm = ({ setRegister }) => {
   const [newUser, setNewUser] = useState({})
   const [showPassword, setShowPassword] = useState(false)
+  const[error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
   const navigate = useNavigate()
   const { setUser } = useContext(UserContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError('') // Clear previous errors
+    setIsLoading(true)
+    try {
+      //Creating user in database
+      const userCreated = await creatNewUser(newUser)
+      console.log('user created')
 
-    //Creating user in database
-    const userCreated = await creatNewUser(newUser)
-    console.log('user created')
-
-    //Login with the created user
-    console.log('Login')
-    const { username, password } = newUser
-    //Retry cause maybe user creation get late
-    let retries = 5
-    let loginUser = null
-    while (retries > 0) {
-      try {
-        loginUser = await login({ username, password })
-        break // success, break bucle
-      } catch (e) {
-        retries--
-        setTimeout(500) // wait half second
+      //Login with the created user
+      console.log('Login')
+      const { username, password } = newUser
+      //Retry cause maybe user creation get late
+      let retries = 5
+      let loginUser = null
+      while (retries > 0) {
+        try {
+          loginUser = await login({ username, password })
+          break // success, break bucle
+        } catch (e) {
+          retries--
+          setTimeout(500) // wait half second
+        }
       }
+
+      //Set user and token
+      window.localStorage.setItem(
+        'loggedBlogsappUser',
+        JSON.stringify(loginUser),
+      )
+      setUser(loginUser)
+      setToken(loginUser.token)
+
+      navigate('/toDoList')
+      console.log('New user created:', userCreated)
+      console.log('Login')
+    } catch (err) {
+      if (err.response?.status === 409) {
+        setError('Username already exists. Please choose a different username.')
+      } else if (err.response?.status === 400) {
+        setError('Invalid user data. Please check your information.')
+      } else if (err.response?.status === 500) {
+        setError('Server error. Please try again later.')
+      } else if (err.message === 'Network Error') {
+        setError('Network error. Please check your connection.')
+      } else {
+        setError(
+          err.response?.data?.error ||
+            err.message ||
+            'Registration failed. Please try again.',
+        )
+      }
+    } finally {
+      setIsLoading(false)
     }
-
-    //Set user and token
-    window.localStorage.setItem('loggedBlogsappUser', JSON.stringify(loginUser))
-    setUser(loginUser)
-    setToken(loginUser.token)
-
-    navigate('/toDoList')
-    console.log('New user created:', userCreated)
-    console.log('Login')
   }
 
   return (
@@ -53,6 +80,17 @@ const RegisterForm = ({ setRegister }) => {
         </h2>
         <p className="text-sm text-[#9e9e9e]">Join us today and get started</p>
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className="mb-4 flex items-center gap-3 rounded-xl border border-red-200 bg-red-50 p-4">
+          <FaExclamationTriangle
+            className="flex-shrink-0 text-red-500"
+            size={20}
+          />
+          <p className="text-sm font-medium text-red-700">{error}</p>
+        </div>
+      )}
 
       <form className="space-y-5" onSubmit={handleSubmit}>
         <div className="space-y-3">
@@ -70,6 +108,7 @@ const RegisterForm = ({ setRegister }) => {
                 setNewUser({ ...newUser, username: e.target.value })
               }}
               required
+              disabled={isLoading}
               className="w-full rounded-xl border-2 border-gray-200 bg-[#F0F4C3]/30 px-4 py-3 text-[#000000] placeholder-[#9e9e9e] transition-all duration-200 focus:border-[#AFB42B] focus:bg-white focus:ring-2 focus:ring-[#AFB42B]/20 focus:outline-none"
               placeholder="Choose a username"
             />
@@ -89,6 +128,7 @@ const RegisterForm = ({ setRegister }) => {
                 setNewUser({ ...newUser, name: e.target.value })
               }}
               required
+              disabled={isLoading}
               className="w-full rounded-xl border-2 border-gray-200 bg-[#F0F4C3]/30 px-4 py-3 text-[#000000] placeholder-[#9e9e9e] transition-all duration-200 focus:border-[#AFB42B] focus:bg-white focus:ring-2 focus:ring-[#AFB42B]/20 focus:outline-none"
               placeholder="Enter your full name"
             />
@@ -109,6 +149,7 @@ const RegisterForm = ({ setRegister }) => {
                   setNewUser({ ...newUser, password: e.target.value })
                 }}
                 required
+                disabled={isLoading}
                 className="w-full rounded-xl border-2 border-gray-200 bg-[#F0F4C3]/30 px-4 py-3 pr-12 text-[#000000] placeholder-[#9e9e9e] transition-all duration-200 focus:border-[#AFB42B] focus:bg-white focus:ring-2 focus:ring-[#AFB42B]/20 focus:outline-none"
                 placeholder="Create a secure password"
               />
@@ -119,6 +160,7 @@ const RegisterForm = ({ setRegister }) => {
                   e.stopPropagation()
                   setShowPassword(!showPassword)
                 }}
+                disabled={isLoading}
               >
                 {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
               </button>
@@ -129,9 +171,11 @@ const RegisterForm = ({ setRegister }) => {
         <button
           type="submit"
           className="w-full transform rounded-xl bg-[#CDDC39] px-6 py-3 text-lg font-semibold text-[#000000] shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#a2af2e] hover:shadow-xl focus:ring-4 focus:ring-[#CDDC39]/30 focus:outline-none disabled:transform-none disabled:cursor-not-allowed disabled:opacity-50"
-          disabled={!newUser.username || !newUser.name || !newUser.password}
+          disabled={
+            !newUser.username || !newUser.name || !newUser.password || isLoading
+          }
         >
-          Create Account
+          {isLoading ? 'Creating Account...' : 'Create Account'}
         </button>
       </form>
 
@@ -141,6 +185,7 @@ const RegisterForm = ({ setRegister }) => {
           <button
             onClick={() => setRegister(false)}
             className="ml-1 cursor-pointer font-medium text-[#AFB42B] transition-colors duration-200 hover:text-[#a2af2e] hover:underline"
+            disabled={isLoading}
           >
             Sign in
           </button>

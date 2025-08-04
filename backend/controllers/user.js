@@ -26,6 +26,12 @@ userRouter.post('/', async (req, res) => {
     logger.error('username and password are required')
     return res.status(400).json({ error: 'username and password are required' })
   }
+  const users = await userService.getAllUsers()
+  const user = users.find(user => user.username === username)
+  if (user) {
+    logger.error('username already exist')
+    return res.status(409).json({ error: 'username already exist' })
+  }
 
   const saltRounds = 10
   const passwordHash = await bcrypt.hash(password, saltRounds)
