@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router'
 import { useState, useContext } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import { creatNewUser } from '../../services/users'
-import { UserContext } from '../../useContext/userContext'
+import { UserContext } from '../../useContext/UserContext'
 import { setToken } from '../../services/toDoList'
 import { login } from '../../services/login'
 
