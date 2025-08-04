@@ -35,7 +35,6 @@ listRouter.get('/', async (req, res) => {
 listRouter.post('/', async (req, res) => {
   logger.info('Recived request to add item:', req.body)
 
-  //Getting title and description from request
   const { title, description } = req.body
   if (!title || !description) {
     return res

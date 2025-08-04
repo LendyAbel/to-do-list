@@ -65,14 +65,14 @@ userRouter.put('/:id', async (req, res) => {
   res.status(200).json(updatedUser)
 })
 
-userRouter.delete('/:id', async (req, res) => {
-  const id = req.params.id
-  logger.info('Recived request to delete item with id:', id)
+// userRouter.delete('/:id', async (req, res) => {
+//   const id = req.params.id
+//   logger.info('Recived request to delete item with id:', id)
 
-  const deletedUser = await userService.deleteUserById(id)
+//   const deletedUser = await userService.deleteUserById(id)
 
-  logger.info(`User deleted successfully: `, deletedUser)
-  res.status(204).send(deletedUser)
-})
+//   logger.info(`User deleted successfully: `, deletedUser)
+//   res.status(204).send(deletedUser)
+// })
 
 module.exports = userRouter
