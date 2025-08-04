@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router'
 import { motion, AnimatePresence } from 'framer-motion'
 import { UserContext } from '../../useContext/UserContext'
 import { HiOutlineMenu, HiX, HiOutlineLogout } from 'react-icons/hi'
+import { MdOutlinePassword } from 'react-icons/md'
 import { setToken } from '../../services/toDoList'
 
-const OptionMenu = () => {
+const OptionMenu = ({handleChangePasswordOpen}) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
   const navigate = useNavigate()
@@ -38,6 +39,11 @@ const OptionMenu = () => {
     setUser(null)
     setToken(null)
   }
+
+  const handleChangePassword = () => {
+    console.log('change password clicked')
+    setMenuOpen(false)
+  }
   return (
     <div className="absolute right-5" ref={menuRef}>
       <button
@@ -57,7 +63,7 @@ const OptionMenu = () => {
         {menuOpen && (
           <motion.div
             {...menuVariants}
-            className="absolute top-12 right-0 z-50 w-48 rounded-xl border border-white/20 bg-white/95 shadow-2xl backdrop-blur-sm"
+            className="absolute top-12 right-0 z-50 w-52 rounded-xl border border-white/20 bg-white/95 shadow-2xl backdrop-blur-sm "
           >
             <div className="py-2">
               <button
@@ -66,6 +72,13 @@ const OptionMenu = () => {
               >
                 <HiOutlineLogout className="h-5 w-5" />
                 <span className="font-medium">Logout</span>
+              </button>
+              <button
+                onClick={handleChangePasswordOpen}
+                className="flex w-full items-center gap-3 px-4 py-3 text-left text-[#607D8B] transition-colors duration-200 hover:bg-[#F0F4C3]/30 focus:bg-[#F0F4C3]/30 focus:outline-none"
+              >
+                <MdOutlinePassword className="h-5 w-5" />
+                <span className="font-medium">Change Password</span>
               </button>
             </div>
           </motion.div>

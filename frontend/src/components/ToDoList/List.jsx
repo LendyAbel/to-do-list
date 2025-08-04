@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { getAll } from '../../services/toDoList'
 import { useMemo, useContext } from 'react'
-import { UserContext } from '../../useContext/userContext'
+import { UserContext } from '../../useContext/UserContext'
 import { Element } from '../'
 import { motion } from 'framer-motion'
 

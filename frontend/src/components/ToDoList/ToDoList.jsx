@@ -1,9 +1,17 @@
 import { useState } from 'react'
-import { List, AddForm, Filter, MainButton, OptionMenu } from '../'
+import {
+  List,
+  AddForm,
+  Filter,
+  MainButton,
+  OptionMenu,
+  ChangePasswordForm,
+} from '../'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const ToDoList = () => {
-  const [formOpen, setFormOpen] = useState(false)
+  const [addFormOpen, setAddFormOpen] = useState(false)
+  const [passwordFormOpen, setPasswordFormOpen] = useState(false)
   const [isDeleteActive, setIsDeleteActive] = useState(false)
   const [activeFilter, setActiveFilter] = useState('all')
 
@@ -19,16 +27,18 @@ const ToDoList = () => {
     <div className="mx-auto w-full max-w-2xl p-4">
       <div className="overflow-hidden rounded-2xl border border-white/20 bg-white/95 shadow-2xl">
         <AnimatePresence mode="wait">
-          {formOpen ? (
-            <AddForm handleClose={() => setFormOpen(false)} />
+          {addFormOpen ? (
+            <AddForm handleClose={() => setAddFormOpen(false)} />
+          ) : passwordFormOpen ? (
+            <ChangePasswordForm handleClose={()=> setPasswordFormOpen(false)} />
           ) : (
             <motion.div
               key="list"
               {...screenVariants}
               className="relative p-4 sm:p-6"
-              >
+            >
               {/* Burger Menu */}
-              <OptionMenu />
+              <OptionMenu handleChangePasswordOpen={()=> setPasswordFormOpen(true)} />
               {/* Header */}
               <div className="mb-2">
                 <h2 className="text-2xl font-bold text-[#607D8B]">
@@ -43,7 +53,7 @@ const ToDoList = () => {
                 <MainButton
                   label="Add Element"
                   icon="add"
-                  func={() => setFormOpen(true)}
+                  func={() => setAddFormOpen(true)}
                   className="transform rounded-xl bg-[#CDDC39] px-6 py-3 font-semibold text-[#000000] shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#a2af2e] hover:shadow-xl focus:ring-4 focus:ring-[#CDDC39]/30 focus:outline-none"
                 />
                 <MainButton
