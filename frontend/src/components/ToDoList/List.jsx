@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { getAll } from '../../services/toDoList'
-import { useMemo } from 'react'
+import { useMemo, useContext } from 'react'
+import { UserContext } from '../../useContext/userContext'
 import { Element } from '../'
 import { motion } from 'framer-motion'
 
@@ -12,10 +13,13 @@ const itemVariants = {
 }
 
 const List = ({ activeFilter, isDeleteActive, className }) => {
+  const { user } = useContext(UserContext)
+
   const result = useQuery({
     queryKey: ['posts'],
     queryFn: getAll,
     retry: false,
+    enabled: !!user && !!user.token,
   })
 
   const list = result.data ?? []
