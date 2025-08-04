@@ -4,6 +4,7 @@ import { useContext, useState } from 'react'
 import { FaEye, FaEyeSlash, FaExclamationTriangle } from 'react-icons/fa'
 import { UserContext } from '../../useContext/UserContext'
 import { setToken } from '../../services/toDoList'
+import AcceptButton from '../../ui/Elements/AcceptButton'
 
 const LoginForm = ({ setRegister }) => {
   const [userInputData, setUserInputData] = useState({
@@ -62,7 +63,7 @@ const LoginForm = ({ setRegister }) => {
   return (
     <>
       <div className="mb-3 text-center">
-        <h2 className="mb-2 text-3xl font-bold text-[#607D8B]">Welcome Back</h2>
+        <h2 className="mb-2 text-3xl font-bold text-[#607D8B]">Welcome</h2>
         <p className="text-sm text-[#9e9e9e]">Please sign in to your account</p>
       </div>
 
@@ -136,15 +137,16 @@ const LoginForm = ({ setRegister }) => {
           </div>
         </div>
 
-        <button
+        <AcceptButton
+          label="Sign In"
+          loadingLabel="Signing In..."
           type="submit"
-          className="w-full transform rounded-xl bg-[#CDDC39] px-6 py-3 text-lg font-semibold text-[#000000] shadow-lg transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#a2af2e] hover:shadow-xl focus:ring-4 focus:ring-[#CDDC39]/30 focus:outline-none disabled:transform-none disabled:cursor-not-allowed disabled:opacity-50"
-          disabled={
+          className="w-full"
+          disable={
             !userInputData.username || !userInputData.password || isLoading
           }
-        >
-          {isLoading ? 'Signing In...' : 'Sign In'}
-        </button>
+          isPending={isLoading}
+        />
       </form>
       <div className="mt-2 text-center">
         <p className="text-sm text-[#9e9e9e]">
