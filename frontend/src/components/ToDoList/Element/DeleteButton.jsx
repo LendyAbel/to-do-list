@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteById } from '../../../services/toDoList'
-import { ConfirmationModal } from '../../'
+import ConfirmationModal from '../../../ui/utils/ConfirmationModal'
 import { IoTrashBinOutline } from 'react-icons/io5'
 import { motion } from 'framer-motion'
 

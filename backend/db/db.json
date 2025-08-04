@@ -10,22 +10,15 @@
     {
       "title": "Correr",
       "description": "Correr 1000km",
-      "checked": true,
-      "id": "ZdDjRj",
-      "user": "zRjWRe"
-    },
-    {
-      "title": "Correr",
-      "description": "Correr 1000km",
       "checked": false,
       "id": "7Fj8Zo",
       "user": "zRjWRe"
     },
     {
-      "title": "Hola",
-      "description": "Hola",
+      "title": "Prueba",
+      "description": "Prueba",
       "checked": false,
-      "id": "stV5PS",
+      "id": "BF0KzO",
       "user": "zRjWRe"
     }
   ],
