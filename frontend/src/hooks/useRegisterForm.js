@@ -44,7 +44,6 @@ export const useRegisterForm = () => {
       const { userCreated, loginUser } = await creatinAndLogin(newUser)
       setUserToken(loginUser)
       navigate('/toDoList')
-      console.log('New user created:', userCreated)
     } catch (err) {
       if (err.response?.status === 409) {
         setError('Username already exists. Please choose a different username.')

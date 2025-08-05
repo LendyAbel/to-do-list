@@ -1,5 +1,5 @@
 const express = require('express')
-const cors = require('cors')
+
 
 const listRouter = require('./controllers/list')
 const userRouter = require('./controllers/user')
@@ -9,11 +9,13 @@ const { authMiddleware } = require('./middleware/auth')
 
 const app = express()
 
-app.use(cors())
+
+app.use(express.static('dist'))
+
 app.use(express.json())
 
-app.use('/list', authMiddleware, listRouter)
-app.use('/users', userRouter)
-app.use('/login', loginRouter)
+app.use('/api/list', authMiddleware, listRouter)
+app.use('/api/users', userRouter)
+app.use('/api/login', loginRouter)
 
 module.exports = app

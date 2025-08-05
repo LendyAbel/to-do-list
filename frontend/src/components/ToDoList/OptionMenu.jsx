@@ -40,10 +40,6 @@ const OptionMenu = ({ handleChangePasswordOpen }) => {
     setToken(null)
   }
 
-  const handleChangePassword = () => {
-    console.log('change password clicked')
-    setMenuOpen(false)
-  }
   return (
     <div className="absolute right-5" ref={menuRef}>
       <button

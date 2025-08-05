@@ -8,19 +8,15 @@ const getAllUsers = async () => {
 const findUserById = async userId => {
   const db = await getDB()
   const user = db.data.users.find(user => user.id === userId)
-  if (!user) {
-    return response.status(400).json({ error: 'userId missing or not valid' })
-  }
-  return user
+  
+  return user || null
 }
 
 const findUserByUsername = async username => {
   const db = await getDB()
   const user = db.data.users.find(user => user.username === username)
-  if (!user) {
-    return response.status(400).json({ error: 'username missing or not valid' })
-  }
-  return user
+  
+  return user || null
 }
 
 const writeUser = async user => {

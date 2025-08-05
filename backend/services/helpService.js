@@ -10,12 +10,7 @@ const getDB = async () => {
   const db = await listDB
   await db.read()
   if (!db.data.list) {
-    return res
-      .status(500)
-      .json({ error: 'List not found' })
-      .end(() => {
-        logger.error('List not found')
-      })
+    return logger.error('List not found')
   }
   return db
 }

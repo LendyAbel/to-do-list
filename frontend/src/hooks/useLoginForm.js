@@ -26,19 +26,15 @@ export const useLoginForm = () => {
         password: userInputData.password,
       }
       const loginUser = await login(credentials)
-
       window.localStorage.setItem(
         'loggedBlogsappUser',
         JSON.stringify(loginUser),
       )
       setUser(loginUser)
       setToken(loginUser.token)
-
       navigate('/toDoList')
-      console.log('Login')
     } catch (error) {
       if (error.response?.status === 401) {
-        console.log('ERROR:', error.response.data.error)
         setError(`${error.response.data.error}, please try again.`)
       } else if (error.response?.status === 500) {
         setError('Server error. Please try again later.')

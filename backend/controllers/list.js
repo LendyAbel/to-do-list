@@ -47,6 +47,10 @@ listRouter.post('/', async (req, res) => {
 
   const userId = req.user.id
   const user = await userService.findUserById(userId)
+  if (!user) {
+    return res.status(400).json({ error: 'userId missing or not valid' })
+  }
+  
 
   const newElement = {
     title,
