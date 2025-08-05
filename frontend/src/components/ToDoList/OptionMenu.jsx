@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useContext } from 'react'
 import { useNavigate } from 'react-router'
 import { motion, AnimatePresence } from 'framer-motion'
-import { UserContext } from '../../useContext/UserContext'
+import { UserContext } from '../../Context/UserContext'
 import { HiOutlineMenu, HiX, HiOutlineLogout } from 'react-icons/hi'
 import { MdOutlinePassword } from 'react-icons/md'
 import { setToken } from '../../services/toDoList'
