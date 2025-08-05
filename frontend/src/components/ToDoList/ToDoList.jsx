@@ -8,6 +8,7 @@ import {
   ChangePasswordForm,
 } from '../'
 import { motion, AnimatePresence } from 'framer-motion'
+import Header from '../../ui/Elements/Header'
 
 const ToDoList = () => {
   const [addFormOpen, setAddFormOpen] = useState(false)
@@ -30,7 +31,9 @@ const ToDoList = () => {
           {addFormOpen ? (
             <AddForm handleClose={() => setAddFormOpen(false)} />
           ) : passwordFormOpen ? (
-            <ChangePasswordForm handleClose={()=> setPasswordFormOpen(false)} />
+            <ChangePasswordForm
+              handleClose={() => setPasswordFormOpen(false)}
+            />
           ) : (
             <motion.div
               key="list"
@@ -38,16 +41,15 @@ const ToDoList = () => {
               className="relative p-4 sm:p-6"
             >
               {/* Burger Menu */}
-              <OptionMenu handleChangePasswordOpen={()=> setPasswordFormOpen(true)} />
+              <OptionMenu
+                handleChangePasswordOpen={() => setPasswordFormOpen(true)}
+              />
               {/* Header */}
-              <div className="mb-2">
-                <h2 className="text-2xl font-bold text-[#607D8B]">
-                  Your Tasks
-                </h2>
-                <p className="text-sm text-[#9e9e9e]">
-                  Manage and organize your daily tasks
-                </p>
-              </div>
+              <Header
+                title="Your Tasks"
+                description="Manage and organize your daily tasks"
+              />
+
               {/* Action Buttons */}
               <div className="mb-2 flex flex-wrap items-center justify-center gap-2 rounded-xl p-2">
                 <MainButton
