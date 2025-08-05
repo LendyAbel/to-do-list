@@ -1,4 +1,4 @@
-const CancelButton = ({ label, type = 'button', onClick }) => {
+const CancelButton = ({ label = '', type = 'button', onClick = () => {} }) => {
   return (
     <button
       type={type}

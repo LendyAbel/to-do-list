@@ -6,7 +6,7 @@ import { HiOutlineMenu, HiX, HiOutlineLogout } from 'react-icons/hi'
 import { MdOutlinePassword } from 'react-icons/md'
 import { setToken } from '../../services/toDoList'
 
-const OptionMenu = ({handleChangePasswordOpen}) => {
+const OptionMenu = ({ handleChangePasswordOpen }) => {
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef(null)
   const navigate = useNavigate()
@@ -63,22 +63,22 @@ const OptionMenu = ({handleChangePasswordOpen}) => {
         {menuOpen && (
           <motion.div
             {...menuVariants}
-            className="absolute top-12 right-0 z-50 w-52 rounded-xl border border-white/20 bg-white/95 shadow-2xl backdrop-blur-sm "
+            className="absolute top-12 right-0 z-50 w-52 rounded-xl border border-white/20 bg-white/95 shadow-2xl backdrop-blur-sm"
           >
             <div className="py-2">
-              <button
-                onClick={handleLogout}
-                className="flex w-full items-center gap-3 px-4 py-3 text-left text-[#607D8B] transition-colors duration-200 hover:bg-[#F0F4C3]/30 focus:bg-[#F0F4C3]/30 focus:outline-none"
-              >
-                <HiOutlineLogout className="h-5 w-5" />
-                <span className="font-medium">Logout</span>
-              </button>
               <button
                 onClick={handleChangePasswordOpen}
                 className="flex w-full items-center gap-3 px-4 py-3 text-left text-[#607D8B] transition-colors duration-200 hover:bg-[#F0F4C3]/30 focus:bg-[#F0F4C3]/30 focus:outline-none"
               >
                 <MdOutlinePassword className="h-5 w-5" />
                 <span className="font-medium">Change Password</span>
+              </button>
+              <button
+                onClick={handleLogout}
+                className="flex w-full items-center gap-3 px-4 py-3 text-left text-[#607D8B] transition-colors duration-200 hover:bg-[#F0F4C3]/30 focus:bg-[#F0F4C3]/30 focus:outline-none"
+              >
+                <HiOutlineLogout className="h-5 w-5" />
+                <span className="font-medium">Logout</span>
               </button>
             </div>
           </motion.div>
