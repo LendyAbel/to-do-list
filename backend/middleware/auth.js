@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const jwt = require('jsonwebtoken')
 
 const authMiddleware = (req, res, next) => {
@@ -5,7 +7,7 @@ const authMiddleware = (req, res, next) => {
   if (!auth || !auth.startsWith('Bearer ')) return res.status(401).json({ error: 'token missing' })
   try {
     const token = auth.replace('Bearer ', '')
-    req.user = jwt.verify(token, 'secret')
+    req.user = jwt.verify(token, process.env.JWT_SECRET)
     next()
   } catch {
     res.status(401).json({ error: 'invalid token' })

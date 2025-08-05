@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const loginRouter = require('express').Router()
 const userService = require('../services/userService')
 const bcrypt = require('bcrypt')
@@ -10,6 +12,9 @@ loginRouter.post('/', async (req, res) => {
   logger.info('Login request with username: ', username, ' and password: ', password)
 
   const user = await userService.findUserByUsername(username)
+  if (!user) {
+    return res.status(400).json({ error: 'username missing or not valid' })
+  }
   console.log('USER', user)
 
   const passwordCorrect = await bcrypt.compare(password, user.passwordHash)
@@ -24,7 +29,7 @@ loginRouter.post('/', async (req, res) => {
     id: user.id,
   }
 
-  const token = jwt.sign(userForToken, 'secret')
+  const token = jwt.sign(userForToken, process.env.JWT_SECRET)
   const userWithToken = { token, username: user.username, name: user.name, id: user.id }
 
   logger.info('Login correct:', userWithToken)
