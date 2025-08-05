@@ -11,9 +11,11 @@ A modern Full Stack To Do List application with user authentication. Backend is 
 - Ready for deployment (Fly.io, Docker).
 
 ## Project Structure
+```text
 lendyabel-to-do-list/
-├── backend/ # Authenticated REST API (Express, JWT, LowDB)
-└── frontend/ # React SPA (Vite, TailwindCSS)
+├── backend/   # Authenticated REST API (Express, JWT, LowDB)
+└── frontend/  # React SPA (Vite, TailwindCSS)
+```
 
 ## Quick Start
 
