@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/login'
+const baseUrl = `${import.meta.env.VITE_API_URL}/login`
 
 export const login = async (credential) => {
  const response = await axios.post(baseUrl, credential)  

@@ -1,25 +1,39 @@
 {
   "list": [
     {
-      "title": "Compras",
-      "description": "-Pan\n-Arroz\n-Huevos\n-Carnes\n-Patatas\n-etc...",
+      "title": "Mate",
+      "description": "Comprar mate",
       "checked": false,
-      "id": "QQjrxR",
+      "id": "pVVkhX",
+      "user": "_EIspK"
+    },
+    {
+      "title": "Correr",
+      "description": "Correr 1000km",
+      "checked": true,
+      "id": "7Fj8Zo",
       "user": "zRjWRe"
     },
     {
-      "title": "Mate",
-      "description": "Prepara mate",
+      "title": "Prueba",
+      "description": "Prueba",
       "checked": false,
-      "id": "xsZZy0",
-      "user": "_EIspK"
+      "id": "BF0KzO",
+      "user": "zRjWRe"
+    },
+    {
+      "title": "Prueba",
+      "description": "Prueba",
+      "checked": false,
+      "id": "WWsqRK",
+      "user": "q_5One"
     }
   ],
   "users": [
     {
       "username": "Lendy",
       "name": "Lendy Abel Sánchez Vázquez",
-      "passwordHash": "$2b$10$BmQkesPHhXhWX6RyItAqSOOMsnBBPGYhy/cGW3BSNqv/cPFybzNoC",
+      "passwordHash": "$2b$10$4synAdIDEsc4ObCmcnAEkuouDTv.3kG1t4AZFC0Fc7sTQXrS1DJLG",
       "id": "zRjWRe"
     },
     {
@@ -27,6 +41,12 @@
       "name": "Andrea Mabel Gutierrez",
       "passwordHash": "$2b$10$Sqdkvxk45cfLD8Jo3IDs5usqFnjog8lmPH1rgKTXJwpuNcJzXo5/e",
       "id": "_EIspK"
+    },
+    {
+      "username": "Prueba",
+      "name": "asd",
+      "passwordHash": "$2b$10$o2y.LqcXXnT8LF6AI2.1x.apyw88Nw7nk3Pc1zU27CTP5IxrdeNhu",
+      "id": "vRxKTm"
     }
   ]
 }

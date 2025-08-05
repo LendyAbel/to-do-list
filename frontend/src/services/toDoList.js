@@ -1,21 +1,21 @@
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:3001/list'
+const baseUrl = `${import.meta.env.VITE_API_URL}/list`
 
 let token = null
+let config = {}
 
 export const setToken = (newToken) => {
   token = `Bearer ${newToken}`
+  config = { headers: { Authorization: token } }
 }
 
-export const getAll = async (user) => {
-  const response = await axios.get(baseUrl)
-  const list = response.data.filter((task) => task.user === user.id)
-  return list
+export const getAll = async () => {
+  const response = await axios.get(baseUrl, config)
+  return response.data
 }
 
 export const createNew = async (newObject) => {
-  console.log('SERVICE POST token:', token)
   const config = {
     headers: { Authorization: token },
   }
@@ -24,7 +24,7 @@ export const createNew = async (newObject) => {
 }
 
 export const deleteById = async (deletedElement) => {
-  const response = await axios.delete(`${baseUrl}/${deletedElement.id}`)
+  const response = await axios.delete(`${baseUrl}/${deletedElement.id}`, config)
   return response.data
 }
 
@@ -32,6 +32,11 @@ export const updateById = async (updatedObject) => {
   const response = await axios.put(
     `${baseUrl}/${updatedObject.id}`,
     updatedObject,
+    config,
   )
   return response.data
 }
+
+const toDoListService = {setToken}
+
+export default toDoListService

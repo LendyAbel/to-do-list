@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { UserContext } from '../useContext/userContext'
-import { setToken } from '../services/toDoList'
+import { UserContext } from '../Context/UserContext'
+import toDoListService from '../services/toDoList'
+import usersService from '../services/users'
 
 const HeroLayout = ({ children }) => {
   const [user, setUser] = useState(null)
@@ -8,7 +9,8 @@ const HeroLayout = ({ children }) => {
   useEffect(() => {
     const userLogged = JSON.parse(localStorage.getItem('loggedBlogsappUser'))
     setUser(userLogged)
-    setToken(userLogged?.token)
+    toDoListService.setToken(userLogged?.token)
+    usersService.setToken(userLogged?.token)
   }, [])
 
   return (
@@ -39,7 +41,7 @@ const HeroLayout = ({ children }) => {
 
       {/* Content Section */}
       <div>
-        <UserContext.Provider value={{user, setUser}}>
+        <UserContext.Provider value={{ user, setUser }}>
           {children}
         </UserContext.Provider>
       </div>

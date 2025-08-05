@@ -1,53 +1,36 @@
 const userRouter = require('express').Router()
+const userService = require('../services/userService')
 const bcrypt = require('bcrypt')
-const { JSONFilePreset } = require('lowdb/node')
-const path = require('path')
 
 const logger = require('../utils/logger')
 
 const { generateId } = require('../utils/list_helper')
 
-const dbPath = path.join(__dirname, '../db/db.json')
-const listDB = JSONFilePreset(dbPath, { list: [], users: [] })
-
 userRouter.get('/', async (req, res) => {
   logger.info('Recived request to get user')
 
-  const db = await listDB
-  await db.read()
+  const users = await userService.getAllUsers()
 
-  if (!db.data.users) {
-    return res
-      .status(500)
-      .json({ error: 'Users not found' })
-      .end(() => {
-        logger.error('Users not found')
-      })
-  }
-  console.log('db.data.users------', db.data.users)
+  // Deleting hashpassword for security
+  const usersToShow = users.map(({ passwordHash, ...resto }) => resto)
 
-  const usersToShow = db.data.users.map(({ passwordHash, ...resto }) => resto) //Deleting hashpassword for security
-
-  return res
-    .status(200)
-    .json(usersToShow)
-    .end(() => {
-      logger.info('Users sent successfully')
-    })
+  logger.info('Users sent successfully')
+  return res.status(200).json(usersToShow)
 })
 
 userRouter.post('/', async (req, res) => {
   logger.info('Recived request to add usser:', req.body)
 
   const { username, password, name } = req.body
-
   if (!username || !password) {
-    return res
-      .status(400)
-      .json({ error: 'username and password are required' })
-      .end(() => {
-        logger.error('username and password are required')
-      })
+    logger.error('username and password are required')
+    return res.status(400).json({ error: 'username and password are required' })
+  }
+  const users = await userService.getAllUsers()
+  const user = users.find(user => user.username === username)
+  if (user) {
+    logger.error('username already exist')
+    return res.status(409).json({ error: 'username already exist' })
   }
 
   const saltRounds = 10
@@ -60,58 +43,36 @@ userRouter.post('/', async (req, res) => {
     id: generateId(),
   }
 
-  const db = await listDB
-  await db.read()
+  const userAdded = await userService.writeUser(newUser)
 
-  db.data.users.push(newUser)
-  await db.write()
-
-  res
-    .status(201)
-    .json(newUser)
-    .end(() => {
-      logger.info('User added successfully:', newUser)
-    })
+  logger.info('User added successfully:', userAdded)
+  res.status(201).json(userAdded)
 })
 
 userRouter.put('/:id', async (req, res) => {
-  logger.info('Recived request to update item with id:', id)
   const id = req.params.id
-  const { username, password, name } = req.body
+  logger.info('Recived request to update item with id:', id)
+  const { username, newPassword, name } = req.body
 
   const saltRounds = 10
-  const passwordHash = await bcrypt.hash(password, saltRounds)
+  const passwordHash = await bcrypt.hash(newPassword, saltRounds)
 
-  const updatedUser = { username, name, passwordHash, id }
+  const userToUpdate = { username, name, passwordHash, id }
 
-  const db = await listDB
-  await db.read()
+  const updatedUser = await userService.updateUserById(id, userToUpdate)
 
-  db.data.users = db.data.users.map(user => (user.id === id ? updatedUser : user))
-  await db.write()
-
-  res
-    .status(200)
-    .json(updatedUser)
-    .end(() => {
-      logger.info('User updated successfully:', updatedUser)
-    })
+  logger.info('User updated successfully:', updatedUser)
+  res.status(200).json(updatedUser)
 })
 
-userRouter.delete('/:id', async (req, res) => {
-  const id = req.params.id
-  console.log()
-  logger.info('Recived request to delete item with id:', id)
+// userRouter.delete('/:id', async (req, res) => {
+//   const id = req.params.id
+//   logger.info('Recived request to delete item with id:', id)
 
-  const db = await listDB
-  await db.read()
+//   const deletedUser = await userService.deleteUserById(id)
 
-  db.data.users = db.data.users.filter(user => user.id !== id)
-  await db.write()
-
-  res.status(204).end(() => {
-    logger.info(`User with id ${id} deleted successfully`)
-  })
-})
+//   logger.info(`User deleted successfully: `, deletedUser)
+//   res.status(204).send(deletedUser)
+// })
 
 module.exports = userRouter
