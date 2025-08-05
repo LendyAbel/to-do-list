@@ -1,12 +1,45 @@
-# React + Vite
+# Frontend - To Do List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Single Page Application built with React, Vite, and TailwindCSS.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Modern responsive UI.
+- Secure registration, login, and logout.
+- Private To Do list, filters, and password change.
+- Animations with Framer Motion.
+- JWT authentication with backend.
 
-## Expanding the ESLint configuration
+## Requirements
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js v18+
+- npm
+
+## Setup
+
+1. **Set up environment:**
+   Create a `.env` file in `/frontend`:
+   VITE_API_URL=http://localhost:3001/api
+
+2. **Install dependencies:**   
+   npm install
+
+3. **Run in development:**
+   npm run dev
+   (App at http://localhost:5173)
+
+4. **Build for production:**
+   cd ../backend
+   npm run build:ui
+
+## Linting & Formatting
+
+- ESLint and Prettier (`npm run lint`) are configured.
+- TailwindCSS with Prettier plugin for class sorting.
+
+## Usage
+
+- Everything is integrated with the backend.
+- JWTs are stored in `localStorage` and sent transparently in HTTP headers.
+
+---
